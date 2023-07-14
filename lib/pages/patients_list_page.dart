@@ -1,7 +1,5 @@
 import 'package:evolucao_medica_2023/pages/patient_form_page.dart';
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
-
 import '../config/data_service.dart';
 
 class PatientListPage extends StatefulWidget {
@@ -17,13 +15,13 @@ class _MyHomePageState extends State<PatientListPage> {
   List<Map<String, dynamic>> _items = [];
 
   DataService dataService = DataService();
-  @override
+  //@override
   void initState() {
     super.initState();
     _items = dataService.refreshItems(); // Load data when app starts
   }
 
-  void _showForm(BuildContext ctx, int? itemKey) async {
+  void showForm(BuildContext ctx, int? itemKey) async {
     var existingItem;
     if (itemKey != null) {
       existingItem = _items.firstWhere((element) => element['key'] == itemKey);
@@ -34,9 +32,27 @@ class _MyHomePageState extends State<PatientListPage> {
       elevation: 5,
       isScrollControlled: true,
       builder: (_) => ModalPatient(
-        itemKey: itemKey!,
+        itemKey: itemKey,
         name: existingItem != null ? existingItem['name'] : '',
         phone: existingItem != null ? existingItem['phone'] : '',
+        cpf: '',
+        evolucao: '',
+        exames: '',
+        hipotese: '',
+        informacoes: '',
+        leito: '',
+        parametros: '',
+        prescricao: '',
+
+        /*
+        cpf: existingItem != null ? existingItem['cpf'] : '',
+        evolucao: existingItem != null ? existingItem['evolucao'] : '',
+        exames: existingItem != null ? existingItem['exames'] : '',
+        hipotese: existingItem != null ? existingItem['hipotese'] : '',
+        informacoes: existingItem != null ? existingItem['informacoes'] : '',
+        leito: existingItem != null ? existingItem['leito'] : '',
+        parametros: existingItem != null ? existingItem['parametros'] : '',
+        prescricao: existingItem != null ? existingItem['prescricao'] : '',*/
       ),
     );
   }
@@ -65,11 +81,18 @@ class _MyHomePageState extends State<PatientListPage> {
                     children: [
                       IconButton(
                           onPressed: () =>
-                              _showForm(context, currentItem['key']),
+                              showForm(context, currentItem['key']),
                           icon: const Icon(Icons.edit)),
                       IconButton(
-                          onPressed: () => dataService.deleteItem(
-                              currentItem['key'], context),
+                          onPressed: () {
+                            setState(() {
+                              dataService
+                                  .deleteItem(currentItem['key'], context)
+                                  .then((_) => setState(() {
+                                        //setstate
+                                      }));
+                            });
+                          },
                           icon: const Icon(Icons.delete))
                     ],
                   ),
@@ -77,7 +100,7 @@ class _MyHomePageState extends State<PatientListPage> {
               );
             }),
         floatingActionButton: FloatingActionButton(
-          onPressed: () => _showForm(context, null),
+          onPressed: () => showForm(context, null),
           child: const Icon(Icons.add),
         ));
   }
