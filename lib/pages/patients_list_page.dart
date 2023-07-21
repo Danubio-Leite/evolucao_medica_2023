@@ -1,3 +1,4 @@
+import 'package:evolucao_medica_2023/components/patient_tile.dart';
 import 'package:evolucao_medica_2023/pages/patient_form_page.dart';
 import 'package:flutter/material.dart';
 import '../config/data_service.dart';
@@ -26,8 +27,7 @@ class _MyHomePageState extends State<PatientListPage> {
     if (itemKey != null) {
       existingItem = _items.firstWhere((element) => element['key'] == itemKey);
     } //Verifica se o item já existe e preenche o modal com seus dados
-
-    showModalBottomSheet(
+    var _itemstemp = await showModalBottomSheet(
       context: ctx,
       elevation: 5,
       isScrollControlled: true,
@@ -55,6 +55,9 @@ class _MyHomePageState extends State<PatientListPage> {
         prescricao: existingItem != null ? existingItem['prescricao'] : '',*/
       ),
     );
+    setState(() {
+      _items = _itemstemp;
+    });
   }
 
   @override
@@ -69,35 +72,20 @@ class _MyHomePageState extends State<PatientListPage> {
             itemCount: _items.length,
             itemBuilder: (_, index) {
               final currentItem = _items[index];
-              return Card(
-                color: Colors.green,
-                margin: const EdgeInsets.all(10),
-                elevation: 3,
-                child: ListTile(
-                  title: Text(currentItem['name']),
-                  subtitle: Text(currentItem['phone'].toString()),
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      IconButton(
-                          onPressed: () =>
-                              showForm(context, currentItem['key']),
-                          icon: const Icon(Icons.edit)),
-                      IconButton(
-                          onPressed: () {
-                            setState(() {
-                              dataService
-                                  .deleteItem(currentItem['key'], context)
-                                  .then((_) => setState(() {
-                                        //setstate
-                                      }));
-                            });
-                          },
-                          icon: const Icon(Icons.delete))
-                    ],
-                  ),
-                ),
-              );
+              return PatientTile(
+                  currentItem: currentItem,
+                  onClickEdit: () {
+                    showForm(context, currentItem['key']);
+                  },
+                  onClickDelete: () {
+                    setState(() {
+                      dataService
+                          .deleteItem(currentItem['key'], context)
+                          .then((_) => setState(() {
+                                _items = dataService.refreshItems();
+                              }));
+                    });
+                  });
             }),
         floatingActionButton: FloatingActionButton(
           onPressed: () => showForm(context, null),

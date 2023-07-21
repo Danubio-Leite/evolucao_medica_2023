@@ -182,10 +182,7 @@ class _ModalPatientState extends State<ModalPatient> {
                   _parametrosController.text = '';
                   _prescricaoController.text = '';
 
-                  Navigator.of(context).pop();
-                  setState(() {
-                    //setstate adicionado, nao funcionando
-                  });
+                  Navigator.of(context).pop(dataService.refreshItems());
                 });
               },
               child: Text(widget.itemKey == null ? 'Create New' : 'Update'),
