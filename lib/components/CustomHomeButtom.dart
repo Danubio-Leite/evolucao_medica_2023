@@ -32,10 +32,11 @@ class CustomHomeButtom extends StatelessWidget {
                 color: Colors.white,
               )),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Image.asset(
                 image,
-                width: 99,
+                width: 80,
               ),
               const SizedBox(
                 height: 5,

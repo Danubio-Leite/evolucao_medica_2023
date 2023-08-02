@@ -1,5 +1,4 @@
 import 'package:evolucao_medica_2023/pages/home_page.dart';
-import 'package:evolucao_medica_2023/pages/patients_list_page.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
