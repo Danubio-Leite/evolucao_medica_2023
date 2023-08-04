@@ -186,7 +186,8 @@ class _ModalPatientState extends State<ModalPatient> {
                     Navigator.of(context).pop(dataService.refreshItems());
                   });
                 },
-                child: Text(widget.itemKey == null ? 'Create New' : 'Update'),
+                child:
+                    Text(widget.itemKey == null ? 'Salvar' : 'Atualizar Dados'),
               ),
               const SizedBox(height: 40),
             ],

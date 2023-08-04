@@ -1,4 +1,4 @@
-import 'package:evolucao_medica_2023/pages/developing_page.dart';
+import 'package:evolucao_medica_2023/pages/in_progress_page.dart';
 import 'package:evolucao_medica_2023/pages/patients_list_page.dart';
 import 'package:flutter/material.dart';
 
@@ -70,7 +70,7 @@ class HomePage extends StatelessWidget {
                       CustomHomeButtom(
                         image: 'assets/images/informacoes.png',
                         label: 'Informações Úteis',
-                        route: DevelopingPage(),
+                        route: InProgressPage(),
                       ),
                     ],
                   ),
@@ -82,7 +82,7 @@ class HomePage extends StatelessWidget {
                       CustomHomeButtom(
                         image: 'assets/images/sala_vermelha.png',
                         label: 'Sala Vermelha',
-                        route: DevelopingPage(),
+                        route: InProgressPage(),
                       ),
                       SizedBox(
                         height: 20,
@@ -90,7 +90,7 @@ class HomePage extends StatelessWidget {
                       CustomHomeButtom(
                         image: 'assets/images/sobre.png',
                         label: 'Sobre o App',
-                        route: DevelopingPage(),
+                        route: InProgressPage(),
                       ),
                     ],
                   ),

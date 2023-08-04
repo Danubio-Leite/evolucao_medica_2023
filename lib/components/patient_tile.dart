@@ -30,7 +30,7 @@ class _PatientTileState extends State<PatientTile> {
                 )),
       ),
       child: Card(
-        color: const Color.fromARGB(255, 148, 216, 224),
+        color: Color.fromARGB(255, 148, 216, 224),
         margin: const EdgeInsets.all(10),
         elevation: 3,
         child: ListTile(
