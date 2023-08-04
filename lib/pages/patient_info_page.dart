@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import '../config/data_service.dart';
 
 class PatientInfoPage extends StatefulWidget {
-  const PatientInfoPage({super.key});
+  PatientInfoPage({super.key, required this.currentItem});
+  Map currentItem;
 
   @override
   State<PatientInfoPage> createState() => _PatientInfoPageState();
@@ -29,9 +30,9 @@ class _PatientInfoPageState extends State<PatientInfoPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            const Row(
+            Row(
               children: [
-                Text(
+                const Text(
                   'Nome:',
                   style: TextStyle(
                     fontSize: 18,
@@ -39,16 +40,16 @@ class _PatientInfoPageState extends State<PatientInfoPage> {
                   ),
                 ),
                 Text(
-                  'Nome Completo',
-                  style: TextStyle(
+                  widget.currentItem['name'],
+                  style: const TextStyle(
                     fontSize: 18,
                   ),
                 ),
               ],
             ),
-            const Row(
+            Row(
               children: [
-                Text(
+                const Text(
                   'Leito:',
                   style: TextStyle(
                     fontSize: 18,
@@ -56,8 +57,8 @@ class _PatientInfoPageState extends State<PatientInfoPage> {
                   ),
                 ),
                 Text(
-                  'Apto 201',
-                  style: TextStyle(
+                  widget.currentItem['leito'].toString(),
+                  style: const TextStyle(
                     fontSize: 18,
                   ),
                 ),

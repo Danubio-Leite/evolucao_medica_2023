@@ -24,7 +24,10 @@ class _PatientTileState extends State<PatientTile> {
     return GestureDetector(
       onTap: () => Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const PatientInfoPage()),
+        MaterialPageRoute(
+            builder: (context) => PatientInfoPage(
+                  currentItem: widget.currentItem,
+                )),
       ),
       child: Card(
         color: Colors.green,
