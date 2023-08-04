@@ -10,7 +10,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 86, 145, 88),
+      backgroundColor: Color.fromARGB(255, 35, 163, 178),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -55,7 +55,6 @@ class HomePage extends StatelessWidget {
               children: [
                 Container(
                   padding: const EdgeInsets.only(top: 50),
-                  height: MediaQuery.of(context).size.height,
                   child: const Column(
                     children: [
                       CustomHomeButtom(
@@ -66,11 +65,11 @@ class HomePage extends StatelessWidget {
                         ),
                       ),
                       SizedBox(
-                        height: 50,
+                        height: 20,
                       ),
                       CustomHomeButtom(
-                        image: 'assets/images/sala_vermelha.png',
-                        label: 'Sala Vermelha',
+                        image: 'assets/images/informacoes.png',
+                        label: 'Informações Úteis',
                         route: DevelopingPage(),
                       ),
                     ],
@@ -78,16 +77,15 @@ class HomePage extends StatelessWidget {
                 ),
                 Container(
                   padding: const EdgeInsets.only(top: 50),
-                  height: MediaQuery.of(context).size.height,
                   child: const Column(
                     children: [
                       CustomHomeButtom(
-                        image: 'assets/images/informacoes.png',
-                        label: 'Informações Úteis',
+                        image: 'assets/images/sala_vermelha.png',
+                        label: 'Sala Vermelha',
                         route: DevelopingPage(),
                       ),
                       SizedBox(
-                        height: 50,
+                        height: 20,
                       ),
                       CustomHomeButtom(
                         image: 'assets/images/sobre.png',

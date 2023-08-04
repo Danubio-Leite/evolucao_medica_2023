@@ -16,7 +16,7 @@ class _PatientInfoPageState extends State<PatientInfoPage> {
       body: Container(
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(20)),
-          color: Color.fromARGB(255, 86, 145, 88),
+          color: Color.fromARGB(255, 35, 163, 178),
         ),
         padding: const EdgeInsets.all(10),
         margin: const EdgeInsets.only(

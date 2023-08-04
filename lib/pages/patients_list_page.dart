@@ -55,38 +55,48 @@ class _MyHomePageState extends State<PatientListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 196, 194, 194),
-      appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 86, 145, 88),
-        title: Text(widget.title),
-      ),
-      body: ListView.builder(
-          itemCount: _items.length,
-          itemBuilder: (_, index) {
-            final currentItem = _items[index];
-            return PatientTile(
-                currentItem: currentItem,
-                onClickEdit: () {
-                  showForm(context, currentItem['key']);
-                },
-                onClickDelete: () {
-                  setState(() {
-                    dataService
-                        .deleteItem(currentItem['key'], context)
-                        .then((_) => setState(() {
-                              _items = dataService.refreshItems();
-                            }));
-                  });
-                });
-          }),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.green,
-        onPressed: () => showForm(context, null),
-        child: const Icon(
-          Icons.add,
+    return Stack(
+      children: [
+        Image.asset(
+          "assets/images/background.jpg",
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          fit: BoxFit.cover,
         ),
-      ),
+        Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: AppBar(
+            backgroundColor: const Color.fromARGB(255, 35, 163, 178),
+            title: Text(widget.title),
+          ),
+          body: ListView.builder(
+              itemCount: _items.length,
+              itemBuilder: (_, index) {
+                final currentItem = _items[index];
+                return PatientTile(
+                    currentItem: currentItem,
+                    onClickEdit: () {
+                      showForm(context, currentItem['key']);
+                    },
+                    onClickDelete: () {
+                      setState(() {
+                        dataService
+                            .deleteItem(currentItem['key'], context)
+                            .then((_) => setState(() {
+                                  _items = dataService.refreshItems();
+                                }));
+                      });
+                    });
+              }),
+          floatingActionButton: FloatingActionButton(
+            backgroundColor: const Color.fromARGB(255, 35, 163, 178),
+            onPressed: () => showForm(context, null),
+            child: const Icon(
+              Icons.add,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
