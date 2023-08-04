@@ -35,16 +35,6 @@ class _MyHomePageState extends State<PatientListPage> {
         itemKey: itemKey,
         name: existingItem != null ? existingItem['name'] : '',
         phone: existingItem != null ? existingItem['phone'] : '',
-        cpf: '',
-        evolucao: '',
-        exames: '',
-        hipotese: '',
-        informacoes: '',
-        leito: '',
-        parametros: '',
-        prescricao: '',
-
-        /*
         cpf: existingItem != null ? existingItem['cpf'] : '',
         evolucao: existingItem != null ? existingItem['evolucao'] : '',
         exames: existingItem != null ? existingItem['exames'] : '',
@@ -52,7 +42,7 @@ class _MyHomePageState extends State<PatientListPage> {
         informacoes: existingItem != null ? existingItem['informacoes'] : '',
         leito: existingItem != null ? existingItem['leito'] : '',
         parametros: existingItem != null ? existingItem['parametros'] : '',
-        prescricao: existingItem != null ? existingItem['prescricao'] : '',*/
+        prescricao: existingItem != null ? existingItem['prescricao'] : '',
       ),
     );
     setState(() {

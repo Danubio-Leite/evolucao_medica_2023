@@ -64,9 +64,9 @@ class _PatientInfoPageState extends State<PatientInfoPage> {
                 ),
               ],
             ),
-            const Wrap(
+            Wrap(
               children: [
-                Text(
+                const Text(
                   'Evolução:',
                   style: TextStyle(
                     fontSize: 18,
@@ -74,8 +74,8 @@ class _PatientInfoPageState extends State<PatientInfoPage> {
                   ),
                 ),
                 Text(
-                  'Paciente Mario, sexo masculino, 82 anos, admitido nessa unidade no dia 25/04. Lista de problemas atual: P1) Choque séptico sec. à ITU;  - Problema pelo qual o paciente foi admitido(em uso de ceftriaxone Di: x)P2) HPB;  -  É um problema que eu posso associar ao P1P3) Disfunção renal – IRA pós-renal – RESOLVIDO;   - se não souber, nãodefinir se pós ou préP4) HASP5) DAC com passado de RVM (stent farmacológico – 2010) – importante prasaber se ainda preciso de dupla anti-agregaçãoP6) FA (anticoagulado com Xarelto)',
-                  style: TextStyle(
+                  widget.currentItem['evolucao'],
+                  style: const TextStyle(
                     fontSize: 16,
                   ),
                 ),

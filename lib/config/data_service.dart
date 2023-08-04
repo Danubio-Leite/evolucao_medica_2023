@@ -7,7 +7,19 @@ class DataService {
   List<Map<String, dynamic>> refreshItems() {
     final data = _patientsBox.keys.map((key) {
       final item = _patientsBox.get(key);
-      return {"key": key, "name": item["name"], "phone": item['phone']};
+      return {
+        "key": key,
+        "name": item["name"],
+        "phone": item['phone'],
+        "cpf": item['cpf'],
+        "leito": item['leito'],
+        "evolucao": item['evolucao'],
+        "exames": item['exames'],
+        "hipotese": item['hipotese'],
+        "informacoes": item['informacoes'],
+        "parametros": item['parametros'],
+        "prescricao": item['prescricao'],
+      };
     }).toList();
 
     return data.reversed.toList();
