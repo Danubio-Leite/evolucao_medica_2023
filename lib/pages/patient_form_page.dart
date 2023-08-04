@@ -53,142 +53,144 @@ class _ModalPatientState extends State<ModalPatient> {
     super.initState();
     _nameController.text = widget.name;
     _phoneController.text = widget.phone;
-    _phoneController.text = widget.cpf;
-    _phoneController.text = widget.evolucao;
-    _phoneController.text = widget.exames;
-    _phoneController.text = widget.hipotese;
-    _phoneController.text = widget.informacoes;
-    _phoneController.text = widget.leito;
-    _phoneController.text = widget.parametros;
-    _phoneController.text = widget.prescricao;
+    _cpfController.text = widget.cpf;
+    _evolucaoController.text = widget.evolucao;
+    _examesController.text = widget.exames;
+    _hipoteseController.text = widget.hipotese;
+    _informacoesController.text = widget.informacoes;
+    _leitoController.text = widget.leito;
+    _parametrosController.text = widget.parametros;
+    _prescricaoController.text = widget.prescricao;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(
-          bottom: MediaQuery.of(context).viewInsets.bottom,
-          top: 15,
-          left: 15,
-          right: 15),
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            TextField(
-              controller: _nameController,
-              keyboardType: TextInputType.name,
-              decoration: const InputDecoration(hintText: 'Name'),
-            ),
-            const SizedBox(height: 10),
-            TextField(
-              controller: _phoneController,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(hintText: 'Phone'),
-            ),
-            const SizedBox(height: 10),
-            TextField(
-              controller: _cpfController,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(hintText: 'CPF'),
-            ),
-            const SizedBox(height: 10),
-            TextField(
-              controller: _evolucaoController,
-              keyboardType: TextInputType.text,
-              decoration: const InputDecoration(hintText: 'Evolução'),
-            ),
-            const SizedBox(height: 10),
-            TextField(
-              controller: _examesController,
-              keyboardType: TextInputType.text,
-              decoration: const InputDecoration(hintText: 'Exames'),
-            ),
-            const SizedBox(height: 10),
-            TextField(
-              controller: _hipoteseController,
-              keyboardType: TextInputType.text,
-              decoration: const InputDecoration(hintText: 'Hipotese'),
-            ),
-            const SizedBox(height: 10),
-            TextField(
-              controller: _informacoesController,
-              keyboardType: TextInputType.text,
-              decoration:
-                  const InputDecoration(hintText: 'Informacões adicionais'),
-            ),
-            const SizedBox(height: 10),
-            TextField(
-              controller: _leitoController,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(hintText: 'Leito'),
-            ),
-            const SizedBox(height: 10),
-            TextField(
-              controller: _parametrosController,
-              keyboardType: TextInputType.text,
-              decoration: const InputDecoration(hintText: 'Paramêtros'),
-            ),
-            const SizedBox(height: 10),
-            TextField(
-              controller: _prescricaoController,
-              keyboardType: TextInputType.text,
-              decoration: const InputDecoration(hintText: 'Prescrição'),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () async {
-                setState(() {
-                  if (widget.itemKey == null) {
-                    dataService.createItem({
-                      "name": _nameController.text,
-                      "phone": _phoneController.text,
-                      "cpf": _cpfController.text,
-                      "evolucao": _evolucaoController.text,
-                      "exames": _examesController.text,
-                      "hipotese": _hipoteseController.text,
-                      "informacoes": _informacoesController.text,
-                      "leito": _leitoController.text,
-                      "parametros": _parametrosController.text,
-                      "prescricao": _prescricaoController.text,
-                    });
-                  }
+    return Scaffold(
+      body: Container(
+        padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+            top: 15,
+            left: 15,
+            right: 15),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              TextField(
+                controller: _nameController,
+                keyboardType: TextInputType.name,
+                decoration: const InputDecoration(hintText: 'Name'),
+              ),
+              const SizedBox(height: 10),
+              TextField(
+                controller: _phoneController,
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(hintText: 'Phone'),
+              ),
+              const SizedBox(height: 10),
+              TextField(
+                controller: _cpfController,
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(hintText: 'CPF'),
+              ),
+              const SizedBox(height: 10),
+              TextField(
+                controller: _evolucaoController,
+                keyboardType: TextInputType.text,
+                decoration: const InputDecoration(hintText: 'Evolução'),
+              ),
+              const SizedBox(height: 10),
+              TextField(
+                controller: _examesController,
+                keyboardType: TextInputType.text,
+                decoration: const InputDecoration(hintText: 'Exames'),
+              ),
+              const SizedBox(height: 10),
+              TextField(
+                controller: _hipoteseController,
+                keyboardType: TextInputType.text,
+                decoration: const InputDecoration(hintText: 'Hipotese'),
+              ),
+              const SizedBox(height: 10),
+              TextField(
+                controller: _informacoesController,
+                keyboardType: TextInputType.text,
+                decoration:
+                    const InputDecoration(hintText: 'Informacões adicionais'),
+              ),
+              const SizedBox(height: 10),
+              TextField(
+                controller: _leitoController,
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(hintText: 'Leito'),
+              ),
+              const SizedBox(height: 10),
+              TextField(
+                controller: _parametrosController,
+                keyboardType: TextInputType.text,
+                decoration: const InputDecoration(hintText: 'Paramêtros'),
+              ),
+              const SizedBox(height: 10),
+              TextField(
+                controller: _prescricaoController,
+                keyboardType: TextInputType.text,
+                decoration: const InputDecoration(hintText: 'Prescrição'),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () async {
+                  setState(() {
+                    if (widget.itemKey == null) {
+                      dataService.createItem({
+                        "name": _nameController.text,
+                        "phone": _phoneController.text,
+                        "cpf": _cpfController.text,
+                        "evolucao": _evolucaoController.text,
+                        "exames": _examesController.text,
+                        "hipotese": _hipoteseController.text,
+                        "informacoes": _informacoesController.text,
+                        "leito": _leitoController.text,
+                        "parametros": _parametrosController.text,
+                        "prescricao": _prescricaoController.text,
+                      });
+                    }
 
-                  if (widget.itemKey != null) {
-                    dataService.updateItem(widget.itemKey, {
-                      'name': _nameController.text.trim(),
-                      'phone': _phoneController.text.trim(),
-                      "cpf": _cpfController.text.trim(),
-                      "evolucao": _evolucaoController.text.trim(),
-                      "exames": _examesController.text.trim(),
-                      "hipotese": _hipoteseController.text.trim(),
-                      "informacoes": _informacoesController.text.trim(),
-                      "leito": _leitoController.text.trim(),
-                      "parametros": _parametrosController.text.trim(),
-                      "prescricao": _prescricaoController.text.trim(),
-                    });
-                  }
+                    if (widget.itemKey != null) {
+                      dataService.updateItem(widget.itemKey, {
+                        'name': _nameController.text.trim(),
+                        'phone': _phoneController.text.trim(),
+                        "cpf": _cpfController.text.trim(),
+                        "evolucao": _evolucaoController.text.trim(),
+                        "exames": _examesController.text.trim(),
+                        "hipotese": _hipoteseController.text.trim(),
+                        "informacoes": _informacoesController.text.trim(),
+                        "leito": _leitoController.text.trim(),
+                        "parametros": _parametrosController.text.trim(),
+                        "prescricao": _prescricaoController.text.trim(),
+                      });
+                    }
 
-                  //Clear the text fields
-                  _nameController.text = '';
-                  _phoneController.text = '';
-                  _cpfController.text = '';
-                  _evolucaoController.text = '';
-                  _examesController.text = '';
-                  _hipoteseController.text = '';
-                  _informacoesController.text = '';
-                  _leitoController.text = '';
-                  _parametrosController.text = '';
-                  _prescricaoController.text = '';
+                    //Clear the text fields
+                    _nameController.text = '';
+                    _phoneController.text = '';
+                    _cpfController.text = '';
+                    _evolucaoController.text = '';
+                    _examesController.text = '';
+                    _hipoteseController.text = '';
+                    _informacoesController.text = '';
+                    _leitoController.text = '';
+                    _parametrosController.text = '';
+                    _prescricaoController.text = '';
 
-                  Navigator.of(context).pop(dataService.refreshItems());
-                });
-              },
-              child: Text(widget.itemKey == null ? 'Create New' : 'Update'),
-            ),
-            const SizedBox(height: 40),
-          ],
+                    Navigator.of(context).pop(dataService.refreshItems());
+                  });
+                },
+                child: Text(widget.itemKey == null ? 'Create New' : 'Update'),
+              ),
+              const SizedBox(height: 40),
+            ],
+          ),
         ),
       ),
     );
