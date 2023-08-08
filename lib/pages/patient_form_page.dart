@@ -1,3 +1,4 @@
+import 'package:evolucao_medica_2023/image_picker/exame_page_picker.dart';
 import 'package:flutter/material.dart';
 
 import '../config/data_service.dart';
@@ -101,11 +102,19 @@ class _ModalPatientState extends State<ModalPatient> {
                 decoration: const InputDecoration(hintText: 'Evolução'),
               ),
               const SizedBox(height: 10),
-              TextField(
+              /*TextField(
                 controller: _examesController,
                 keyboardType: TextInputType.text,
                 decoration: const InputDecoration(hintText: 'Exames'),
-              ),
+              ),*/
+              ElevatedButton(
+                  onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ExamePagePicker(),
+                        ),
+                      ),
+                  child: const Text('Anexar Exames')),
               const SizedBox(height: 10),
               TextField(
                 controller: _hipoteseController,

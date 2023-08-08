@@ -39,6 +39,9 @@ dependencies:
   dio:
   hive_flutter:
   hive:
+  image_picker: ^1.0.2
+  camera_camera: ^3.0.0
+  get:
 
 dev_dependencies:
   flutter_test:
