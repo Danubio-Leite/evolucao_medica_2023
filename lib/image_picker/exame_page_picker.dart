@@ -3,6 +3,7 @@ import 'package:camera_camera/camera_camera.dart';
 import 'package:evolucao_medica_2023/image_picker/preview_page.dart';
 import 'package:evolucao_medica_2023/image_picker/widget_anexo.dart';
 import 'package:flutter/material.dart';
+import 'dart:convert';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:image_picker/image_picker.dart';
@@ -15,6 +16,7 @@ class ExamePagePicker extends StatefulWidget {
 }
 
 class _ExamePagePickerState extends State<ExamePagePicker> {
+  String? base64Image;
   File? exame;
   final picker = ImagePicker();
 
@@ -25,6 +27,10 @@ class _ExamePagePickerState extends State<ExamePagePicker> {
       setState(
         () => exame = File(file.path),
       );
+      List<int> imageBytes = exame!.readAsBytesSync();
+      print(imageBytes);
+      base64Image = base64Encode(imageBytes);
+      print(base64Image);
     }
   }
 
@@ -33,7 +39,7 @@ class _ExamePagePickerState extends State<ExamePagePicker> {
 
     if (file != null) {
       setState(() => exame = file);
-      Get.back();
+      Navigator.pop(context, base64Image);
     }
   }
 
@@ -41,7 +47,9 @@ class _ExamePagePickerState extends State<ExamePagePicker> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Envio de Exames'),
+        title: const Text(
+          'Envio de Exames',
+        ),
       ),
       body: Center(
         child: Row(
@@ -82,6 +90,16 @@ class _ExamePagePickerState extends State<ExamePagePicker> {
                   onPressed: () => getFileFromGallery(),
                   icon: const Icon(Icons.attach_file),
                   label: const Text('Selecione um exame'),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: OutlinedButton.icon(
+                    onPressed: () {
+                      Navigator.pop(context, base64Image);
+                    },
+                    icon: const Icon(Icons.save),
+                    label: const Text('Salvar Exame'),
+                  ),
                 ),
               ],
             )

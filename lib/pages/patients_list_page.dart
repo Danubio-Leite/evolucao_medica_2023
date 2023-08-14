@@ -31,7 +31,7 @@ class _MyHomePageState extends State<PatientListPage> {
     var _itemstemp = await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ModalPatient(
+        builder: (context) => PatientForm(
           itemKey: itemKey,
           name: existingItem['name'] ?? '',
           phone: existingItem['phone'] ?? '',
@@ -48,9 +48,11 @@ class _MyHomePageState extends State<PatientListPage> {
     );
     //Verifica se o item já existe e preenche o modal com seus dados
 
-    setState(() {
-      _items = _itemstemp;
-    });
+    if (_itemstemp != null) {
+      setState(() {
+        _items = _itemstemp;
+      });
+    }
   }
 
   @override

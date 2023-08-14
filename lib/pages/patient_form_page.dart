@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 import '../config/data_service.dart';
 
-class ModalPatient extends StatefulWidget {
-  ModalPatient({
+class PatientForm extends StatefulWidget {
+  PatientForm({
     super.key,
     required this.itemKey,
     required this.name,
@@ -32,10 +32,10 @@ class ModalPatient extends StatefulWidget {
   String informacoes;
 
   @override
-  State<ModalPatient> createState() => _ModalPatientState();
+  State<PatientForm> createState() => _ModalPatientState();
 }
 
-class _ModalPatientState extends State<ModalPatient> {
+class _ModalPatientState extends State<PatientForm> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _cpfController = TextEditingController();
@@ -47,6 +47,8 @@ class _ModalPatientState extends State<ModalPatient> {
   final TextEditingController _parametrosController = TextEditingController();
   final TextEditingController _prescricaoController = TextEditingController();
 
+  String? exames;
+
   DataService dataService = DataService();
 
   @override
@@ -56,7 +58,7 @@ class _ModalPatientState extends State<ModalPatient> {
     _phoneController.text = widget.phone;
     _cpfController.text = widget.cpf;
     _evolucaoController.text = widget.evolucao;
-    _examesController.text = widget.exames;
+    exames = widget.exames;
     _hipoteseController.text = widget.hipotese;
     _informacoesController.text = widget.informacoes;
     _leitoController.text = widget.leito;
@@ -67,6 +69,10 @@ class _ModalPatientState extends State<ModalPatient> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        title: const Text('Cadastro de Paciente'),
+      ),
       body: Container(
         padding: EdgeInsets.only(
             bottom: MediaQuery.of(context).viewInsets.bottom,
@@ -102,20 +108,6 @@ class _ModalPatientState extends State<ModalPatient> {
                 decoration: const InputDecoration(hintText: 'Evolução'),
               ),
               const SizedBox(height: 10),
-              /*TextField(
-                controller: _examesController,
-                keyboardType: TextInputType.text,
-                decoration: const InputDecoration(hintText: 'Exames'),
-              ),*/
-              ElevatedButton(
-                  onPressed: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const ExamePagePicker(),
-                        ),
-                      ),
-                  child: const Text('Anexar Exames')),
-              const SizedBox(height: 10),
               TextField(
                 controller: _hipoteseController,
                 keyboardType: TextInputType.text,
@@ -146,6 +138,36 @@ class _ModalPatientState extends State<ModalPatient> {
                 keyboardType: TextInputType.text,
                 decoration: const InputDecoration(hintText: 'Prescrição'),
               ),
+              const SizedBox(height: 10),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5)),
+                      side: const BorderSide(
+                        width: 1,
+                        color: Colors.black,
+                      ),
+                      backgroundColor: Colors.transparent,
+                      elevation: 0,
+                    ),
+                    onPressed: () async {
+                      exames = await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ExamePagePicker(),
+                        ),
+                      );
+                    },
+                    child: const Text(
+                      'Anexar Exames',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                      ),
+                    )),
+              ),
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () async {
@@ -156,7 +178,7 @@ class _ModalPatientState extends State<ModalPatient> {
                         "phone": _phoneController.text,
                         "cpf": _cpfController.text,
                         "evolucao": _evolucaoController.text,
-                        "exames": _examesController.text,
+                        "exames": exames,
                         "hipotese": _hipoteseController.text,
                         "informacoes": _informacoesController.text,
                         "leito": _leitoController.text,
@@ -171,7 +193,7 @@ class _ModalPatientState extends State<ModalPatient> {
                         'phone': _phoneController.text.trim(),
                         "cpf": _cpfController.text.trim(),
                         "evolucao": _evolucaoController.text.trim(),
-                        "exames": _examesController.text.trim(),
+                        "exames": exames,
                         "hipotese": _hipoteseController.text.trim(),
                         "informacoes": _informacoesController.text.trim(),
                         "leito": _leitoController.text.trim(),

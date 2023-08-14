@@ -15,7 +15,7 @@ class ShowForm {
       context: ctx,
       elevation: 5,
       isScrollControlled: true,
-      builder: (_) => ModalPatient(
+      builder: (_) => PatientForm(
         itemKey: itemKey,
         name: existingItem != null ? existingItem['name'] : '',
         phone: existingItem != null ? existingItem['phone'] : '',
