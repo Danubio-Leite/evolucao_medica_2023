@@ -37,7 +37,8 @@ class _MyHomePageState extends State<PatientListPage> {
           phone: existingItem['phone'] ?? '',
           cpf: existingItem['cpf'] ?? '',
           evolucao: existingItem['evolucao'] ?? '',
-          exames: existingItem['exames'] ?? '',
+          //deletei o existingItem['exames'] ??, estava dando erro de tipo
+          exames: [],
           hipotese: existingItem['hipotese'] ?? '',
           informacoes: existingItem['informacoes'] ?? '',
           leito: existingItem['leito'] ?? '',

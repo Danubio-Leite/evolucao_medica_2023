@@ -35,7 +35,7 @@ class _PatientTileState extends State<PatientTile> {
         elevation: 3,
         child: ListTile(
           title: Text(widget.currentItem['name']),
-          subtitle: Text(widget.currentItem['phone'].toString()),
+          subtitle: Text('Leito ${widget.currentItem['leito'].toString()}'),
           trailing: Row(
             mainAxisSize: MainAxisSize.min,
             children: [

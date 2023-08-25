@@ -28,7 +28,8 @@ class PatientForm extends StatefulWidget {
   String hipotese;
   String evolucao;
   String parametros;
-  String exames;
+  //transformei o exames em list
+  List<dynamic> exames;
   String informacoes;
 
   @override
@@ -58,7 +59,8 @@ class _ModalPatientState extends State<PatientForm> {
     _phoneController.text = widget.phone;
     _cpfController.text = widget.cpf;
     _evolucaoController.text = widget.evolucao;
-    exames = widget.exames;
+    //retirei o widget. do exames
+    exames = exames;
     _hipoteseController.text = widget.hipotese;
     _informacoesController.text = widget.informacoes;
     _leitoController.text = widget.leito;
@@ -104,8 +106,17 @@ class _ModalPatientState extends State<PatientForm> {
               const SizedBox(height: 10),
               TextField(
                 controller: _evolucaoController,
-                keyboardType: TextInputType.text,
-                decoration: const InputDecoration(hintText: 'Evolução'),
+                keyboardType: TextInputType.multiline,
+                maxLines: null,
+                decoration: const InputDecoration(
+                  hintText: 'Evolução',
+                  hintStyle: TextStyle(
+                      leadingDistribution: TextLeadingDistribution.even),
+                  contentPadding: EdgeInsets.symmetric(
+                    vertical: 10,
+                    horizontal: 5,
+                  ),
+                ),
               ),
               const SizedBox(height: 10),
               TextField(

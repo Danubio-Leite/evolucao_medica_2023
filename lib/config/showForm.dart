@@ -21,7 +21,8 @@ class ShowForm {
         phone: existingItem != null ? existingItem['phone'] : '',
         cpf: '',
         evolucao: '',
-        exames: '',
+        //coloquei exames como list
+        exames: [],
         hipotese: '',
         informacoes: '',
         leito: '',
