@@ -1,5 +1,12 @@
+import 'dart:io';
+
 import 'package:evolucao_medica_2023/pages/more_info_page.dart';
+import 'package:evolucao_medica_2023/pages/pdf_view_page.dart';
 import 'package:flutter/material.dart';
+import 'package:share_extend/share_extend.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:pdf/widgets.dart' as pdfLib;
+import 'package:flutter_pdfview/flutter_pdfview.dart';
 import '../config/data_service.dart';
 
 class PatientInfoPage extends StatefulWidget {
@@ -133,6 +140,113 @@ class _PatientInfoPageState extends State<PatientInfoPage> {
                       ),
                     ),
                   ],
+                ),
+                const SizedBox(height: 10),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5)),
+                      side: const BorderSide(
+                        width: 1,
+                        color: Colors.black,
+                      ),
+                    ),
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text(
+                              "Exportação de Dados",
+                              textAlign: TextAlign.center,
+                            ),
+                            content: SizedBox(
+                              width: double.infinity,
+                              height: 300,
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5)),
+                                      side: const BorderSide(
+                                        width: 1,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => PDFViewPage(
+                                            currentItem: widget.currentItem,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    child: const Text(
+                                      'Exportar em PDF',
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                  ),
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5)),
+                                      side: const BorderSide(
+                                        width: 1,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    onPressed: () {},
+                                    child: const Text(
+                                      'Exportar em Texto',
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                  ),
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.transparent,
+                                      elevation: 0,
+                                    ),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Text(
+                                      'Voltar',
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                    child: const Text(
+                      'Exportar Dados',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),

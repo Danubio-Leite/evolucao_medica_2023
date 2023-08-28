@@ -27,7 +27,7 @@ class _MyHomePageState extends State<PatientListPage> {
     if (itemKey != null) {
       existingItem = _items.firstWhere((element) => element['key'] == itemKey);
     }
-    print(existingItem);
+    print(existingItem['exames']);
     var _itemstemp = await Navigator.push(
       context,
       MaterialPageRoute(
@@ -38,6 +38,7 @@ class _MyHomePageState extends State<PatientListPage> {
           cpf: existingItem['cpf'] ?? '',
           evolucao: existingItem['evolucao'] ?? '',
           //deletei o existingItem['exames'] ??, estava dando erro de tipo
+          //exames: existingItem['exames'] ?? '',
           exames: [],
           hipotese: existingItem['hipotese'] ?? '',
           informacoes: existingItem['informacoes'] ?? '',

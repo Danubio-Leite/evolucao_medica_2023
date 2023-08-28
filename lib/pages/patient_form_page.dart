@@ -29,7 +29,7 @@ class PatientForm extends StatefulWidget {
   String evolucao;
   String parametros;
   //transformei o exames em list
-  List<dynamic> exames;
+  List<String> exames;
   String informacoes;
 
   @override
@@ -48,7 +48,7 @@ class _ModalPatientState extends State<PatientForm> {
   final TextEditingController _parametrosController = TextEditingController();
   final TextEditingController _prescricaoController = TextEditingController();
 
-  String? exames;
+  List<String>? exames;
 
   DataService dataService = DataService();
 
@@ -164,12 +164,13 @@ class _ModalPatientState extends State<PatientForm> {
                       elevation: 0,
                     ),
                     onPressed: () async {
-                      exames = await Navigator.push(
+                      var temp = await Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => const ExamePagePicker(),
                         ),
                       );
+                      exames?.add(temp);
                     },
                     child: const Text(
                       'Anexar Exames',
