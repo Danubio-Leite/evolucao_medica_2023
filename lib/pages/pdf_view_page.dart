@@ -1,14 +1,17 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:convert';
 import 'dart:typed_data';
-
+import 'package:image/image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pdfWid;
 import 'package:printing/printing.dart';
 
 class PDFViewPage extends StatefulWidget {
   Map currentItem;
+
   PDFViewPage({Key? key, required this.currentItem}) : super(key: key);
 
   @override
@@ -40,57 +43,73 @@ class _PDFViewState extends State<PDFViewPage> {
       version: PdfVersion.pdf_1_4,
       compress: true,
     );
+
+    final ByteData image =
+        await rootBundle.load('assets/images/pdf_bottom.png');
+    Uint8List bottomData = (image).buffer.asUint8List();
+
+    final ByteData image2 = await rootBundle.load('assets/images/home.png');
+    Uint8List testData = (image2).buffer.asUint8List();
+
     pdf.addPage(
       pdfWid.Page(
-        pageFormat: PdfPageFormat((80 * (72.0 / 25.4)), 600,
-            marginAll: 5 * (72.0 / 25.4)),
-        //pageFormat: format,
+        //pageFormat: PdfPageFormat((80 * (72.0 / 25.4)), 600,
+        //marginAll: 5 * (72.0 / 25.4)),
+        pageFormat: format,
         build: (context) {
           return pdfWid.SizedBox(
             width: double.infinity,
-            child: pdfWid.FittedBox(
-                child: pdfWid.Column(
-                    mainAxisAlignment: pdfWid.MainAxisAlignment.start,
-                    children: [
-                  pdfWid.Text(widget.currentItem['name'],
-                      style: pdfWid.TextStyle(
-                          fontSize: 35, fontWeight: pdfWid.FontWeight.bold)),
-                  pdfWid.Container(
-                    width: 250,
-                    height: 1.5,
-                    margin: pdfWid.EdgeInsets.symmetric(vertical: 5),
-                    color: PdfColors.black,
-                  ),
-                  pdfWid.Container(
-                    width: 300,
-                    child: pdfWid.Text(
-                        'Leito ${widget.currentItem['leito'].toString()}',
+            child: pdfWid.Column(
+                mainAxisAlignment: pdfWid.MainAxisAlignment.spaceBetween,
+                children: [
+                  pdfWid.Column(children: [
+                    pdfWid.Text('Paciente: ${widget.currentItem['name']}',
                         style: pdfWid.TextStyle(
-                          fontSize: 35,
-                          fontWeight: pdfWid.FontWeight.bold,
-                        ),
-                        textAlign: pdfWid.TextAlign.center,
-                        maxLines: 5),
-                  ),
-                  pdfWid.Container(
-                    width: 250,
-                    height: 1.5,
-                    margin: pdfWid.EdgeInsets.symmetric(vertical: 10),
-                    color: PdfColors.black,
-                  ),
-                  pdfWid.Text("Evolução",
-                      style: pdfWid.TextStyle(
-                          fontSize: 25, fontWeight: pdfWid.FontWeight.bold)),
-                  pdfWid.Wrap(
-                    children: [
-                      pdfWid.Text(
-                          'Parâmetros: ${widget.currentItem['parametros'].toString()}',
+                            fontSize: 24, fontWeight: pdfWid.FontWeight.bold)),
+                    pdfWid.Container(
+                      width: 250,
+                      height: 1.5,
+                      margin: pdfWid.EdgeInsets.symmetric(vertical: 5),
+                      color: PdfColors.black,
+                    ),
+                    pdfWid.Container(
+                      width: 300,
+                      child: pdfWid.Text(
+                          'Leito ${widget.currentItem['leito'].toString()}',
                           style: pdfWid.TextStyle(
-                              fontSize: 10,
-                              fontWeight: pdfWid.FontWeight.bold)),
-                    ],
+                            fontSize: 20,
+                            fontWeight: pdfWid.FontWeight.bold,
+                          ),
+                          textAlign: pdfWid.TextAlign.center,
+                          maxLines: 5),
+                    ),
+                    pdfWid.Container(
+                      width: 250,
+                      height: 1.5,
+                      margin: pdfWid.EdgeInsets.symmetric(vertical: 10),
+                      color: PdfColors.black,
+                    ),
+                    pdfWid.Text("Evolução",
+                        style: pdfWid.TextStyle(
+                            fontSize: 20, fontWeight: pdfWid.FontWeight.bold)),
+                    pdfWid.Text(
+                      'Evolução: ${widget.currentItem['evolucao']}',
+                      softWrap: true,
+                      style: pdfWid.TextStyle(
+                          fontSize: 16, fontWeight: pdfWid.FontWeight.bold),
+                    ),
+                    pdfWid.Container(
+                      child: pdfWid.Image(
+                        pdfWid.MemoryImage(testData),
+                      ),
+                    ),
+                  ]),
+                  pdfWid.Container(
+                    child: pdfWid.Image(
+                      pdfWid.MemoryImage(bottomData),
+                    ),
                   ),
-                ])),
+                ]),
           );
         },
       ),

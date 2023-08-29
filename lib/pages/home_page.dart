@@ -1,5 +1,7 @@
+import 'package:evolucao_medica_2023/pages/about_app_page.dart';
 import 'package:evolucao_medica_2023/pages/in_progress_page.dart';
 import 'package:evolucao_medica_2023/pages/patients_list_page.dart';
+import 'package:evolucao_medica_2023/pages/useful_information_page.dart';
 import 'package:flutter/material.dart';
 
 import '../components/CustomHomeButtom.dart';
@@ -70,7 +72,7 @@ class HomePage extends StatelessWidget {
                       CustomHomeButtom(
                         image: 'assets/images/informacoes.png',
                         label: 'Informações Úteis',
-                        route: InProgressPage(),
+                        route: UsefulInfoPage(),
                       ),
                     ],
                   ),
@@ -90,7 +92,7 @@ class HomePage extends StatelessWidget {
                       CustomHomeButtom(
                         image: 'assets/images/sobre.png',
                         label: 'Sobre o App',
-                        route: InProgressPage(),
+                        route: AboutAppPage(),
                       ),
                     ],
                   ),
