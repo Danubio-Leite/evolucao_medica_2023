@@ -42,6 +42,6 @@ class DataService {
 
     //Display a snackbar
     ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('An item has benn deleted')));
+        const SnackBar(content: Text('Paciente excluido com sucesso!')));
   }
 }
