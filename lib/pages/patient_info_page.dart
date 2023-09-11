@@ -19,6 +19,13 @@ class PatientInfoPage extends StatefulWidget {
 
 class _PatientInfoPageState extends State<PatientInfoPage> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print(widget.currentItem['exames']);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
@@ -121,8 +128,12 @@ class _PatientInfoPageState extends State<PatientInfoPage> {
                     children: [
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.transparent,
-                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5)),
+                          side: const BorderSide(
+                            width: 1,
+                            color: Colors.black,
+                          ),
                         ),
                         onPressed: () {
                           Navigator.pop(context);
@@ -138,6 +149,14 @@ class _PatientInfoPageState extends State<PatientInfoPage> {
                       Flexible(
                         flex: 1,
                         child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5)),
+                            side: const BorderSide(
+                              width: 1,
+                              color: Colors.black,
+                            ),
+                          ),
                           onPressed: () {
                             showDialog(
                               context: context,
@@ -156,7 +175,10 @@ class _PatientInfoPageState extends State<PatientInfoPage> {
                           },
                           child: const Text(
                             'Mais Informações',
-                            style: TextStyle(color: Colors.black),
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16),
                           ),
                         ),
                       ),
@@ -215,9 +237,9 @@ class _PatientInfoPageState extends State<PatientInfoPage> {
                                       child: const Text(
                                         'Exportar em PDF',
                                         style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 16,
-                                        ),
+                                            color: Colors.black,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold),
                                       ),
                                     ),
                                     ElevatedButton(

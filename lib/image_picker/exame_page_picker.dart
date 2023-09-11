@@ -9,15 +9,15 @@ import 'package:get/get_navigation/get_navigation.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ExamePagePicker extends StatefulWidget {
-  const ExamePagePicker({super.key});
+  const ExamePagePicker(exame, {super.key});
 
   @override
   State<ExamePagePicker> createState() => _ExamePagePickerState();
 }
 
 class _ExamePagePickerState extends State<ExamePagePicker> {
-  String? base64Image;
-  File? exame;
+  List<String>? base64Image = [];
+  List<File>? exame = [];
   final picker = ImagePicker();
 
   Future getFileFromGallery() async {
@@ -25,11 +25,11 @@ class _ExamePagePickerState extends State<ExamePagePicker> {
 
     if (file != null) {
       setState(
-        () => exame = File(file.path),
+        () => exame?.add(File(file.path)),
       );
-      List<int> imageBytes = exame!.readAsBytesSync();
+      List<int> imageBytes = exame![exame!.length - 1].readAsBytesSync();
       print(imageBytes);
-      base64Image = base64Encode(imageBytes);
+      base64Image?.add(base64Encode(imageBytes));
       print(base64Image);
     }
   }
@@ -59,7 +59,7 @@ class _ExamePagePickerState extends State<ExamePagePicker> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                if (exame != null) Anexo(exame: exame!),
+                if (exame != null) Anexo(base64Image: base64Image!),
                 ElevatedButton.icon(
                   onPressed: () => Get.to(
                     () => CameraCamera(

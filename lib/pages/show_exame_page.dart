@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 
 class ShowExamePage extends StatefulWidget {
+  //transformar map em objeto...
   Map currentItem;
   ShowExamePage({super.key, required this.currentItem});
 
@@ -31,10 +32,10 @@ class _ShowExamePageState extends State<ShowExamePage> {
         itemBuilder: (context, pagePosition) {
           return Container(
             margin: const EdgeInsets.all(10),
-            child: widget.currentItem['exames'] != null
+            child: widget.currentItem['exames'][pagePosition] != null
                 ? Image.memory(
                     base64Decode(
-                      widget.currentItem['exames'].toString(),
+                      widget.currentItem['exames'][pagePosition].toString(),
                     ),
                   )
                 : const Center(

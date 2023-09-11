@@ -15,7 +15,7 @@ class PatientForm extends StatefulWidget {
     required this.hipotese,
     required this.evolucao,
     required this.parametros,
-    required this.exames,
+    this.exames = const [],
     required this.informacoes,
   });
 
@@ -59,8 +59,7 @@ class _ModalPatientState extends State<PatientForm> {
     _phoneController.text = widget.phone;
     _cpfController.text = widget.cpf;
     _evolucaoController.text = widget.evolucao;
-    //retirei o widget. do exames
-    exames = exames;
+    exames = widget.exames;
     _hipoteseController.text = widget.hipotese;
     _informacoesController.text = widget.informacoes;
     _leitoController.text = widget.leito;
@@ -167,10 +166,10 @@ class _ModalPatientState extends State<PatientForm> {
                       var temp = await Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const ExamePagePicker(),
+                          builder: (context) => ExamePagePicker(exames),
                         ),
                       );
-                      exames?.add(temp);
+                      exames?.addAll(temp);
                     },
                     child: const Text(
                       'Anexar Exames',
@@ -183,6 +182,7 @@ class _ModalPatientState extends State<PatientForm> {
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () async {
+                  print(exames);
                   setState(() {
                     if (widget.itemKey == null) {
                       dataService.createItem({
