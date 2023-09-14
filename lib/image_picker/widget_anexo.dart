@@ -21,8 +21,8 @@ class _AnexoState extends State<Anexo> {
       padding: const EdgeInsets.only(bottom: 24),
       child: Center(
         child: SizedBox(
-          height: 200,
-          width: 200,
+          height: 250,
+          width: 250,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(12),
             child: PageView.builder(

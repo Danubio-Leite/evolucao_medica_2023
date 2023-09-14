@@ -169,7 +169,9 @@ class _ModalPatientState extends State<PatientForm> {
                           builder: (context) => ExamePagePicker(exames),
                         ),
                       );
-                      exames?.addAll(temp);
+                      if (temp != null) {
+                        exames?.addAll(temp);
+                      }
                     },
                     child: const Text(
                       'Anexar Exames',

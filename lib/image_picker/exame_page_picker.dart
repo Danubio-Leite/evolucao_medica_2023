@@ -89,7 +89,9 @@ class _ExamePagePickerState extends State<ExamePagePicker> {
                 OutlinedButton.icon(
                   onPressed: () => getFileFromGallery(),
                   icon: const Icon(Icons.attach_file),
-                  label: const Text('Selecione um exame'),
+                  label: Text(base64Image != null
+                      ? 'Selecionar Exame'
+                      : 'Adicionar Outro Exame'),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10),
