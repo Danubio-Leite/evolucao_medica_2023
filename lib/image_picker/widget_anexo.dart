@@ -13,38 +13,65 @@ class Anexo extends StatefulWidget {
 }
 
 class _AnexoState extends State<Anexo> {
-  late PageController _pageController;
+  final PageController _pageController = PageController(initialPage: 0);
   int activePage = 0;
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 24),
-      child: Center(
-        child: SizedBox(
-          height: 250,
-          width: 250,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(12),
-            child: PageView.builder(
-              itemCount: widget.base64Image?.length,
-              pageSnapping: true,
-              onPageChanged: (page) {
-                setState(() {
-                  activePage = page;
-                });
-              },
-              itemBuilder: (context, pagePosition) {
-                return Container(
-                  margin: const EdgeInsets.all(10),
-                  child: Image.memory(
-                    base64Decode(
-                      widget.base64Image![pagePosition].toString(),
+    return Center(
+      child: Container(
+        height: 300,
+        width: 250,
+        child: Column(
+          children: [
+            SizedBox(
+              height: 250,
+              width: 250,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: PageView.builder(
+                  controller: _pageController,
+                  itemCount: widget.base64Image?.length,
+                  pageSnapping: true,
+                  onPageChanged: (page) {
+                    setState(() {
+                      activePage = page;
+                    });
+                  },
+                  itemBuilder: (context, pagePosition) {
+                    return Container(
+                      margin: const EdgeInsets.all(10),
+                      child: Image.memory(
+                        base64Decode(
+                          widget.base64Image![pagePosition].toString(),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List<Widget>.generate(
+                widget.base64Image!.length,
+                (index) => Padding(
+                  padding: const EdgeInsetsDirectional.symmetric(horizontal: 5),
+                  child: InkWell(
+                    onTap: () {
+                      _pageController.animateToPage(index,
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.easeIn);
+                    },
+                    child: CircleAvatar(
+                      radius: 6,
+                      backgroundColor:
+                          activePage == index ? Colors.amber : Colors.grey,
                     ),
                   ),
-                );
-              },
+                ),
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );

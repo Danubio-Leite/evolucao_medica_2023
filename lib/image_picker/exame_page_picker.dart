@@ -19,6 +19,8 @@ class _ExamePagePickerState extends State<ExamePagePicker> {
   List<String>? base64Image = [];
   List<File>? exame = [];
   final picker = ImagePicker();
+  final PageController _pageController = PageController(initialPage: 0);
+  int activePage = 0;
 
   Future getFileFromGallery() async {
     final file = await picker.pickImage(source: ImageSource.gallery);
@@ -89,7 +91,7 @@ class _ExamePagePickerState extends State<ExamePagePicker> {
                 OutlinedButton.icon(
                   onPressed: () => getFileFromGallery(),
                   icon: const Icon(Icons.attach_file),
-                  label: Text(base64Image != null
+                  label: Text(exame!.isEmpty
                       ? 'Selecionar Exame'
                       : 'Adicionar Outro Exame'),
                 ),
