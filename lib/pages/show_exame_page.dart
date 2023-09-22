@@ -54,9 +54,11 @@ class _ShowExamePageState extends State<ShowExamePage> {
                       margin: const EdgeInsets.symmetric(
                           horizontal: 15, vertical: 5),
                       child: _pages[pagePosition] != null
-                          ? Image.memory(
-                              base64Decode(
-                                _pages[pagePosition].toString(),
+                          ? InteractiveViewer(
+                              child: Image.memory(
+                                base64Decode(
+                                  _pages[pagePosition].toString(),
+                                ),
                               ),
                             )
                           : const Center(

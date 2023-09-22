@@ -1,10 +1,12 @@
 import 'package:evolucao_medica_2023/pages/about_app_page.dart';
 import 'package:evolucao_medica_2023/pages/in_progress_page.dart';
 import 'package:evolucao_medica_2023/pages/patients_list_page.dart';
+import 'package:evolucao_medica_2023/pages/temp_cronometro.dart';
 import 'package:evolucao_medica_2023/pages/useful_information_page.dart';
 import 'package:flutter/material.dart';
 
 import '../components/CustomHomeButtom.dart';
+import 'cronometro_rcp_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -57,22 +59,22 @@ class HomePage extends StatelessWidget {
               children: [
                 Container(
                   padding: const EdgeInsets.only(top: 50),
-                  child: const Column(
+                  child: Column(
                     children: [
-                      CustomHomeButtom(
+                      const CustomHomeButtom(
                         image: 'assets/images/pacientes.png',
                         label: 'Lista de Pacientes',
                         route: PatientListPage(
                           title: 'Lista de Pacientes',
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       CustomHomeButtom(
                         image: 'assets/images/informacoes.png',
                         label: 'Informações Úteis',
-                        route: UsefulInfoPage(),
+                        route: CountUpTimerPage(),
                       ),
                     ],
                   ),
@@ -83,8 +85,8 @@ class HomePage extends StatelessWidget {
                     children: [
                       CustomHomeButtom(
                         image: 'assets/images/sala_vermelha.png',
-                        label: 'Sala Vermelha',
-                        route: InProgressPage(),
+                        label: 'Cronômetro RCP',
+                        route: RCPPage(),
                       ),
                       SizedBox(
                         height: 20,

@@ -1,11 +1,7 @@
 import 'dart:io';
-import 'package:camera_camera/camera_camera.dart';
-import 'package:evolucao_medica_2023/image_picker/preview_page.dart';
 import 'package:evolucao_medica_2023/image_picker/widget_anexo.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/get_navigation.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ExamePagePicker extends StatefulWidget {
@@ -36,12 +32,17 @@ class _ExamePagePickerState extends State<ExamePagePicker> {
     }
   }
 
-  showPreview(file) async {
-    file = await Get.to(() => PreviewPage(file: file));
+  Future getFileFromCamera() async {
+    final file = await picker.pickImage(source: ImageSource.camera);
 
     if (file != null) {
-      setState(() => exame = file);
-      Navigator.pop(context, base64Image);
+      setState(
+        () => exame?.add(File(file.path)),
+      );
+      List<int> imageBytes = exame![exame!.length - 1].readAsBytesSync();
+      print(imageBytes);
+      base64Image?.add(base64Encode(imageBytes));
+      print(base64Image);
     }
   }
 
@@ -63,11 +64,7 @@ class _ExamePagePickerState extends State<ExamePagePicker> {
               children: [
                 if (exame != null) Anexo(base64Image: base64Image!),
                 ElevatedButton.icon(
-                  onPressed: () => Get.to(
-                    () => CameraCamera(
-                      onFile: (file) => showPreview(file),
-                    ),
-                  ),
+                  onPressed: () => getFileFromCamera(),
                   icon: const Icon(
                     Icons.camera_alt,
                     color: Colors.white,

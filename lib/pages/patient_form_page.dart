@@ -1,5 +1,6 @@
 import 'package:evolucao_medica_2023/image_picker/exame_page_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 import '../config/data_service.dart';
 
@@ -52,6 +53,16 @@ class _ModalPatientState extends State<PatientForm> {
 
   DataService dataService = DataService();
 
+  final cpfFormatter = MaskTextInputFormatter(
+    mask: '###.###.###-##',
+    filter: {'#': RegExp(r'[0-9]')},
+  );
+
+  final phoneFormatter = MaskTextInputFormatter(
+    mask: '## # ####-####',
+    filter: {'#': RegExp(r'[0-9]')},
+  );
+
   @override
   void initState() {
     super.initState();
@@ -95,12 +106,14 @@ class _ModalPatientState extends State<PatientForm> {
                 controller: _phoneController,
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(hintText: 'Phone'),
+                inputFormatters: [phoneFormatter],
               ),
               const SizedBox(height: 10),
               TextField(
                 controller: _cpfController,
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(hintText: 'CPF'),
+                inputFormatters: [cpfFormatter],
               ),
               const SizedBox(height: 10),
               TextField(

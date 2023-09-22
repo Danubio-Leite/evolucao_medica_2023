@@ -12,199 +12,213 @@ class MoreInfoPage extends StatefulWidget {
 class _MoreInfoPageState extends State<MoreInfoPage> {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          Row(
-            children: [
-              const Text(
-                'Nome:',
+    return Column(
+      children: [
+        Expanded(
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Row(
+                  children: [
+                    const Text(
+                      'Nome:',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      widget.currentItem['name'],
+                      style: const TextStyle(
+                        fontSize: 18,
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    const Text(
+                      'Leito:',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      widget.currentItem['leito'].toString(),
+                      style: const TextStyle(
+                        fontSize: 18,
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    const Text(
+                      'CPF:',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      widget.currentItem['cpf'].toString(),
+                      style: const TextStyle(
+                        fontSize: 18,
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    const Text(
+                      'Telefone:',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      widget.currentItem['phone'].toString(),
+                      style: const TextStyle(
+                        fontSize: 18,
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    const Text(
+                      'Hipotese:',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      widget.currentItem['hipotese'].toString(),
+                      style: const TextStyle(
+                        fontSize: 18,
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    const Text(
+                      'Paramêtros:',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      widget.currentItem['parametros'].toString(),
+                      style: const TextStyle(
+                        fontSize: 18,
+                      ),
+                    ),
+                  ],
+                ),
+                Wrap(
+                  children: [
+                    const Text(
+                      'Prescrição:',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      widget.currentItem['prescricao'].toString(),
+                      style: const TextStyle(
+                        fontSize: 18,
+                      ),
+                    ),
+                  ],
+                ),
+                Wrap(
+                  children: [
+                    const Text(
+                      'Informações:',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      widget.currentItem['informacoes'].toString(),
+                      style: const TextStyle(
+                        fontSize: 18,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5)),
+                side: const BorderSide(
+                  width: 1,
+                  color: Colors.black,
+                ),
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text(
+                'Voltar',
                 style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16),
+              ),
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5)),
+                side: const BorderSide(
+                  width: 1,
+                  color: Colors.black,
                 ),
               ),
-              Text(
-                widget.currentItem['name'],
-                style: const TextStyle(
-                  fontSize: 18,
-                ),
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              const Text(
-                'Leito:',
+              onPressed: () {
+                if (widget.currentItem['exames'].toString() != null) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ShowExamePage(
+                              currentItem: widget.currentItem,
+                            )),
+                  );
+                } else {
+                  const AlertDialog(
+                    content: Text('Paciente sem Exames'),
+                  );
+                }
+              },
+              child: const Text(
+                'Exames',
                 style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16),
               ),
-              Text(
-                widget.currentItem['leito'].toString(),
-                style: const TextStyle(
-                  fontSize: 18,
-                ),
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              const Text(
-                'CPF:',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Text(
-                widget.currentItem['cpf'].toString(),
-                style: const TextStyle(
-                  fontSize: 18,
-                ),
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              const Text(
-                'Telefone:',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Text(
-                widget.currentItem['phone'].toString(),
-                style: const TextStyle(
-                  fontSize: 18,
-                ),
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              const Text(
-                'Hipotese:',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Text(
-                widget.currentItem['hipotese'].toString(),
-                style: const TextStyle(
-                  fontSize: 18,
-                ),
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              const Text(
-                'Paramêtros:',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Text(
-                widget.currentItem['parametros'].toString(),
-                style: const TextStyle(
-                  fontSize: 18,
-                ),
-              ),
-            ],
-          ),
-          Wrap(
-            children: [
-              const Text(
-                'Prescrição:',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Text(
-                widget.currentItem['prescricao'].toString(),
-                style: const TextStyle(
-                  fontSize: 18,
-                ),
-              ),
-            ],
-          ),
-          Wrap(
-            children: [
-              const Text(
-                'Informações:',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Text(
-                widget.currentItem['informacoes'].toString(),
-                style: const TextStyle(
-                  fontSize: 18,
-                ),
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.transparent,
-                  elevation: 0,
-                ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text(
-                  'Voltar',
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16),
-                ),
-              ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.transparent,
-                  elevation: 0,
-                ),
-                onPressed: () {
-                  if (widget.currentItem['exames'].toString() != null) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ShowExamePage(
-                                currentItem: widget.currentItem,
-                              )),
-                    );
-                  } else {
-                    const AlertDialog(
-                      content: Text('Paciente sem Exames'),
-                    );
-                  }
-                },
-                child: const Text(
-                  'Exames',
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
