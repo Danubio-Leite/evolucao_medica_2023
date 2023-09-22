@@ -81,17 +81,17 @@ class HomePage extends StatelessWidget {
                 ),
                 Container(
                   padding: const EdgeInsets.only(top: 50),
-                  child: const Column(
+                  child: Column(
                     children: [
                       CustomHomeButtom(
                         image: 'assets/images/sala_vermelha.png',
                         label: 'Cronômetro RCP',
-                        route: RCPPage(),
+                        route: CronoRCPPage(),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
-                      CustomHomeButtom(
+                      const CustomHomeButtom(
                         image: 'assets/images/sobre.png',
                         label: 'Sobre o App',
                         route: AboutAppPage(),

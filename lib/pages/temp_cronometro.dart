@@ -20,7 +20,7 @@ class CountUpTimerPage extends StatefulWidget {
 class _State extends State<CountUpTimerPage> {
   final _isHours = true;
 
-  final StopWatchTimer _stopWatchTimer = StopWatchTimer(
+  final StopWatchTimer _stopWatchTimerMain = StopWatchTimer(
     mode: StopWatchMode.countUp,
     onChange: (value) => print('onChange $value'),
     onChangeRawSecond: (value) => print('onChangeRawSecond $value'),
@@ -32,36 +32,48 @@ class _State extends State<CountUpTimerPage> {
       print('onEnded');
     },
   );
+  final StopWatchTimer _stopWatchTimerCPR = StopWatchTimer(
+    mode: StopWatchMode.countUp,
+  );
+  final StopWatchTimer _stopWatchTimerShock = StopWatchTimer(
+    mode: StopWatchMode.countUp,
+  );
+  final StopWatchTimer _stopWatchTimerEpinephrine = StopWatchTimer(
+    mode: StopWatchMode.countUp,
+  );
 
   final _scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
-    _stopWatchTimer.rawTime.listen((value) =>
+    _stopWatchTimerMain.rawTime.listen((value) =>
         print('rawTime $value ${StopWatchTimer.getDisplayTime(value)}'));
-    _stopWatchTimer.minuteTime.listen((value) => print('minuteTime $value'));
-    _stopWatchTimer.secondTime.listen((value) => print('secondTime $value'));
-    _stopWatchTimer.records.listen((value) => print('records $value'));
-    _stopWatchTimer.fetchStopped
+    _stopWatchTimerMain.minuteTime
+        .listen((value) => print('minuteTime $value'));
+    _stopWatchTimerMain.secondTime
+        .listen((value) => print('secondTime $value'));
+    _stopWatchTimerMain.records.listen((value) => print('records $value'));
+    _stopWatchTimerMain.fetchStopped
         .listen((value) => print('stopped from stream'));
-    _stopWatchTimer.fetchEnded.listen((value) => print('ended from stream'));
+    _stopWatchTimerMain.fetchEnded
+        .listen((value) => print('ended from stream'));
 
     /// Can be set preset time. This case is "00:01.23".
-    // _stopWatchTimer.setPresetTime(mSec: 1234);
+    // _stopWatchTimerMain.setPresetTime(mSec: 1234);
   }
 
   @override
   void dispose() async {
     super.dispose();
-    await _stopWatchTimer.dispose();
+    await _stopWatchTimerMain.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Count Up Timer'),
+        title: const Text('Cronômetro'),
       ),
       body: Scrollbar(
         child: SingleChildScrollView(
@@ -78,12 +90,12 @@ class _State extends State<CountUpTimerPage> {
                 Row(
                   children: [
                     StreamBuilder<int>(
-                      stream: _stopWatchTimer.rawTime,
-                      initialData: _stopWatchTimer.rawTime.value,
+                      stream: _stopWatchTimerMain.rawTime,
+                      initialData: _stopWatchTimerMain.rawTime.value,
                       builder: (context, snap) {
                         final value = snap.data!;
                         final displayTime = StopWatchTimer.getDisplayTime(value,
-                            hours: _isHours);
+                            milliSecond: false, hours: _isHours);
                         return Padding(
                           padding: const EdgeInsets.all(8),
                           child: Text(
@@ -100,7 +112,7 @@ class _State extends State<CountUpTimerPage> {
                       padding: const EdgeInsets.symmetric(horizontal: 4),
                       child: RoundedButton(
                         color: Colors.lightBlue,
-                        onTap: _stopWatchTimer.onStartTimer,
+                        onTap: _stopWatchTimerMain.onStartTimer,
                         child: const Text(
                           'Start',
                           style: TextStyle(color: Colors.white),
@@ -111,7 +123,7 @@ class _State extends State<CountUpTimerPage> {
                       padding: const EdgeInsets.symmetric(horizontal: 4),
                       child: RoundedButton(
                         color: Colors.green,
-                        onTap: _stopWatchTimer.onStopTimer,
+                        onTap: _stopWatchTimerMain.onStopTimer,
                         child: const Text(
                           'Stop',
                           style: TextStyle(color: Colors.white),
@@ -120,6 +132,146 @@ class _State extends State<CountUpTimerPage> {
                     ),
                   ],
                 ),
+                Row(
+                  children: [
+                    StreamBuilder<int>(
+                      stream: _stopWatchTimerCPR.rawTime,
+                      initialData: _stopWatchTimerCPR.rawTime.value,
+                      builder: (context, snap) {
+                        final value = snap.data!;
+                        final displayTime = StopWatchTimer.getDisplayTime(value,
+                            milliSecond: false, hours: _isHours);
+                        return Padding(
+                          padding: const EdgeInsets.all(8),
+                          child: Text(
+                            displayTime,
+                            style: const TextStyle(
+                                fontSize: 25,
+                                fontFamily: 'Helvetica',
+                                fontWeight: FontWeight.bold),
+                          ),
+                        );
+                      },
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 4),
+                      child: RoundedButton(
+                        color: Colors.lightBlue,
+                        onTap: _stopWatchTimerCPR.onStartTimer,
+                        child: const Text(
+                          'Start CPR',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 4),
+                      child: RoundedButton(
+                        color: Colors.green,
+                        onTap: _stopWatchTimerCPR.onStopTimer,
+                        child: const Text(
+                          'Stop',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    StreamBuilder<int>(
+                      stream: _stopWatchTimerShock.rawTime,
+                      initialData: _stopWatchTimerShock.rawTime.value,
+                      builder: (context, snap) {
+                        final value = snap.data!;
+                        final displayTime = StopWatchTimer.getDisplayTime(value,
+                            milliSecond: false, hours: _isHours);
+                        return Padding(
+                          padding: const EdgeInsets.all(8),
+                          child: Text(
+                            displayTime,
+                            style: const TextStyle(
+                                fontSize: 25,
+                                fontFamily: 'Helvetica',
+                                fontWeight: FontWeight.bold),
+                          ),
+                        );
+                      },
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 4),
+                      child: RoundedButton(
+                        color: Colors.lightBlue,
+                        onTap: _stopWatchTimerShock.onStartTimer,
+                        child: const Text(
+                          'Shock',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 4),
+                      child: RoundedButton(
+                        color: Colors.green,
+                        onTap: _stopWatchTimerShock.onStopTimer,
+                        child: const Text(
+                          'Stop',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      StreamBuilder<int>(
+                        stream: _stopWatchTimerEpinephrine.rawTime,
+                        initialData: _stopWatchTimerEpinephrine.rawTime.value,
+                        builder: (context, snap) {
+                          final value = snap.data!;
+                          final displayTime = StopWatchTimer.getDisplayTime(
+                              value,
+                              milliSecond: false,
+                              hours: _isHours);
+                          return Padding(
+                            padding: const EdgeInsets.all(8),
+                            child: Text(
+                              displayTime,
+                              style: const TextStyle(
+                                  fontSize: 25,
+                                  fontFamily: 'Helvetica',
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          );
+                        },
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 4),
+                        child: RoundedButton(
+                          color: Colors.lightBlue,
+                          onTap: _stopWatchTimerEpinephrine.onStartTimer,
+                          child: const Text(
+                            'Epinephrine',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 4),
+                        child: RoundedButton(
+                          color: Colors.green,
+                          onTap: _stopWatchTimerEpinephrine.onStopTimer,
+                          child: const Text(
+                            'Stop',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
 
                 /// Lap time.
                 Padding(
@@ -127,8 +279,8 @@ class _State extends State<CountUpTimerPage> {
                   child: SizedBox(
                     height: 100,
                     child: StreamBuilder<List<StopWatchRecord>>(
-                      stream: _stopWatchTimer.records,
-                      initialData: _stopWatchTimer.records.value,
+                      stream: _stopWatchTimerMain.records,
+                      initialData: _stopWatchTimerMain.records.value,
                       builder: (context, snap) {
                         final value = snap.data!;
                         if (value.isEmpty) {
@@ -180,7 +332,7 @@ class _State extends State<CountUpTimerPage> {
                         padding: const EdgeInsets.symmetric(horizontal: 4),
                         child: RoundedButton(
                           color: Colors.red,
-                          onTap: _stopWatchTimer.onResetTimer,
+                          onTap: _stopWatchTimerMain.onResetTimer,
                           child: const Text(
                             'Reset',
                             style: TextStyle(color: Colors.white),
@@ -200,7 +352,7 @@ class _State extends State<CountUpTimerPage> {
                           padding: const EdgeInsets.all(0).copyWith(right: 8),
                           child: RoundedButton(
                             color: Colors.deepPurpleAccent,
-                            onTap: _stopWatchTimer.onAddLap,
+                            onTap: _stopWatchTimerMain.onAddLap,
                             child: const Text(
                               'Lap',
                               style: TextStyle(color: Colors.white),
@@ -216,7 +368,7 @@ class _State extends State<CountUpTimerPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 4),
                   child: RoundedButton(
                     color: Colors.pinkAccent,
-                    onTap: _stopWatchTimer.clearPresetTime,
+                    onTap: _stopWatchTimerMain.clearPresetTime,
                     child: const Text(
                       'Clear PresetTime',
                       style: TextStyle(color: Colors.white),
