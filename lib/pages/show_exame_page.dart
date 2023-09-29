@@ -1,6 +1,12 @@
+import 'package:evolucao_medica_2023/components/custom_white_buttom.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
+
+import 'package:flutter/services.dart';
+import 'package:share_plus/share_plus.dart';
+
+import '../components/custom_async_button.dart';
 
 class ShowExamePage extends StatefulWidget {
   //transformar map em objeto...
@@ -16,6 +22,7 @@ class _ShowExamePageState extends State<ShowExamePage> {
 
   int activePage = 0;
   List<String> _pages = [];
+  final String imageAsset = 'assets/images/blue.png';
 
   @override
   void initState() {
@@ -99,110 +106,68 @@ class _ShowExamePageState extends State<ShowExamePage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5)),
-                    side: const BorderSide(
-                      width: 1,
-                      color: Colors.black,
-                    ),
-                  ),
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: const Text(
-                            "Confirma a exclusão do Exame?",
-                            textAlign: TextAlign.center,
-                          ),
-                          actions: [
-                            Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    child: const Text('Voltar'),
-                                  ),
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        _pages.removeAt(activePage);
-                                      });
-
-                                      Navigator.pop(context);
-                                      print(_pages);
-                                    },
-                                    child: const Text('Excluir'),
-                                  ),
-                                ]),
-                          ],
-                        );
-                      },
-                    );
-                  },
-                  child: const Text(
-                    'Excluir',
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16),
-                  ),
-                ),
-                Flexible(
-                  flex: 1,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5)),
-                      side: const BorderSide(
-                        width: 1,
-                        color: Colors.black,
-                      ),
-                    ),
-                    onPressed: () {
+                CustomWhiteButton(
+                    label: 'Excluir',
+                    onpressed: () {
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
                             title: const Text(
-                              "Função em Desenvolvimento",
+                              "Confirma a exclusão do Exame?",
                               textAlign: TextAlign.center,
                             ),
                             actions: [
                               Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    ElevatedButton(
-                                      onPressed: () {
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  CustomWhiteButton(
+                                      label: 'Voltar',
+                                      onpressed: () {
                                         Navigator.pop(context);
-                                      },
-                                      child: const Text('Voltar'),
-                                    ),
-                                    ElevatedButton(
-                                      onPressed: () {
+                                      }),
+                                  CustomWhiteButton(
+                                      label: 'Excluir',
+                                      onpressed: () {
+                                        setState(() {
+                                          _pages.removeAt(activePage);
+                                        });
+
                                         Navigator.pop(context);
-                                      },
-                                      child: const Text('Voltar'),
-                                    ),
-                                  ]),
+                                        print(_pages);
+                                      }),
+                                ],
+                              ),
                             ],
                           );
                         },
                       );
+                    }),
+                Flexible(
+                  flex: 1,
+                  child: CustomAsyncButton(
+                    label: 'Compartilhar',
+                    onpressed: () async {
+                      final image = base64Decode(
+                        _pages[activePage].toString(),
+                      );
+                      final buffer = image.buffer;
+                      Share.shareXFiles(
+                        [
+                          XFile.fromData(
+                            buffer.asUint8List(
+                              image.offsetInBytes,
+                              image.lengthInBytes,
+                            ),
+                            name: 'Compartilhamento de Exame',
+                            mimeType: 'image/png',
+                          ),
+                        ],
+                        subject:
+                            'Exame ${widget.currentItem['name']} ${activePage + 1}',
+                      );
                     },
-                    child: const Text(
-                      'Compartilhar',
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16),
-                    ),
                   ),
                 ),
               ],

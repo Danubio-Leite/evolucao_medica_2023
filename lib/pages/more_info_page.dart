@@ -1,3 +1,4 @@
+import 'package:evolucao_medica_2023/components/custom_white_buttom.dart';
 import 'package:evolucao_medica_2023/pages/show_exame_page.dart';
 import 'package:flutter/material.dart';
 
@@ -164,58 +165,28 @@ class _MoreInfoPageState extends State<MoreInfoPage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5)),
-                side: const BorderSide(
-                  width: 1,
-                  color: Colors.black,
-                ),
-              ),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text(
-                'Voltar',
-                style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16),
-              ),
-            ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5)),
-                side: const BorderSide(
-                  width: 1,
-                  color: Colors.black,
-                ),
-              ),
-              onPressed: () {
-                if (widget.currentItem['exames'].toString() != null) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => ShowExamePage(
-                              currentItem: widget.currentItem,
-                            )),
-                  );
-                } else {
-                  const AlertDialog(
-                    content: Text('Paciente sem Exames'),
-                  );
-                }
-              },
-              child: const Text(
-                'Exames',
-                style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16),
-              ),
-            ),
+            CustomWhiteButton(
+                label: 'Voltar',
+                onpressed: () {
+                  Navigator.pop(context);
+                }),
+            CustomWhiteButton(
+                label: 'Exames',
+                onpressed: () {
+                  if (widget.currentItem['exames'].toString() != null) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ShowExamePage(
+                                currentItem: widget.currentItem,
+                              )),
+                    );
+                  } else {
+                    const AlertDialog(
+                      content: Text('Paciente sem Exames'),
+                    );
+                  }
+                }),
           ],
         ),
       ],

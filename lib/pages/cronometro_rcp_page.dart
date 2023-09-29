@@ -124,8 +124,13 @@ class _State extends State<CronoRCPPage> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 4),
                         child: RoundedButton(
-                          color: Colors.lightBlue,
-                          onTap: _stopWatchTimerMain.onStartTimer,
+                          color: Colors.blue,
+                          onTap: () {
+                            _stopWatchTimerMain.onStartTimer();
+                            _stopWatchTimerShock.onStartTimer();
+                          },
+                          //_stopWatchTimerShock.onStartTimer,
+
                           child: const Text(
                             'Start',
                             style: TextStyle(color: Colors.white),
@@ -171,7 +176,7 @@ class _State extends State<CronoRCPPage> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 4),
                         child: RoundedButton(
-                          color: Colors.lightBlue,
+                          color: Colors.redAccent,
                           onTap: _stopWatchTimerCPR.onStartTimer,
                           child: const Text(
                             'Start CPR',
@@ -218,7 +223,7 @@ class _State extends State<CronoRCPPage> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 4),
                         child: RoundedButton(
-                          color: Colors.lightBlue,
+                          color: Colors.orange,
                           onTap: _stopWatchTimerShock.onStartTimer,
                           child: const Text(
                             'Shock',
@@ -267,7 +272,7 @@ class _State extends State<CronoRCPPage> {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 4),
                           child: RoundedButton(
-                            color: Colors.lightBlue,
+                            color: Colors.brown,
                             onTap: _stopWatchTimerEpinephrine.onStartTimer,
                             child: const Text(
                               'Epinephrine',

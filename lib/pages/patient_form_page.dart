@@ -99,13 +99,13 @@ class _ModalPatientState extends State<PatientForm> {
               TextField(
                 controller: _nameController,
                 keyboardType: TextInputType.name,
-                decoration: const InputDecoration(hintText: 'Name'),
+                decoration: const InputDecoration(hintText: 'Nome'),
               ),
               const SizedBox(height: 10),
               TextField(
                 controller: _phoneController,
                 keyboardType: TextInputType.number,
-                decoration: const InputDecoration(hintText: 'Phone'),
+                decoration: const InputDecoration(hintText: 'Telefone'),
                 inputFormatters: [phoneFormatter],
               ),
               const SizedBox(height: 10),
@@ -165,37 +165,46 @@ class _ModalPatientState extends State<PatientForm> {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5)),
-                      side: const BorderSide(
-                        width: 1,
-                        color: Colors.black,
-                      ),
-                      backgroundColor: Colors.transparent,
-                      elevation: 0,
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5)),
+                    side: const BorderSide(
+                      width: 1,
+                      color: Colors.black,
                     ),
-                    onPressed: () async {
-                      var temp = await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ExamePagePicker(exames),
-                        ),
-                      );
-                      if (temp != null) {
-                        exames?.addAll(temp);
-                      }
-                    },
-                    child: const Text(
-                      'Anexar Exames',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
+                    backgroundColor: Colors.transparent,
+                    elevation: 0,
+                  ),
+                  onPressed: () async {
+                    var temp = await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ExamePagePicker(exames),
                       ),
-                    )),
+                    );
+                    if (temp != null) {
+                      exames?.addAll(temp);
+                    }
+                  },
+                  child: const Text(
+                    'Anexar Exames',
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16),
+                  ),
+                ),
               ),
               const SizedBox(height: 20),
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5)),
+                  side: const BorderSide(
+                    width: 1,
+                    color: Colors.black,
+                  ),
+                ),
                 onPressed: () async {
                   print(exames);
                   setState(() {
@@ -244,8 +253,13 @@ class _ModalPatientState extends State<PatientForm> {
                     Navigator.of(context).pop(dataService.refreshItems());
                   });
                 },
-                child:
-                    Text(widget.itemKey == null ? 'Salvar' : 'Atualizar Dados'),
+                child: Text(
+                  widget.itemKey == null ? 'Salvar' : 'Atualizar Dados',
+                  style: const TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16),
+                ),
               ),
               const SizedBox(height: 40),
             ],

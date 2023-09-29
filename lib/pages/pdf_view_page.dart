@@ -48,7 +48,9 @@ class _PDFViewState extends State<PDFViewPage> {
         await rootBundle.load('assets/images/pdf_bottom.png');
     Uint8List bottomData = (image).buffer.asUint8List();
 
-    final ByteData image2 = await rootBundle.load('assets/images/home.png');
+    final Uint8List image2 = base64Decode(
+      widget.currentItem['exames'][1],
+    );
     Uint8List testData = (image2).buffer.asUint8List();
 
     pdf.addPage(
@@ -98,12 +100,13 @@ class _PDFViewState extends State<PDFViewPage> {
                       style: pdfWid.TextStyle(
                           fontSize: 16, fontWeight: pdfWid.FontWeight.bold),
                     ),
-                    pdfWid.Container(
-                      child: pdfWid.Image(
-                        pdfWid.MemoryImage(testData),
-                      ),
-                    ),
                   ]),
+                  pdfWid.Container(
+                    height: 300,
+                    child: pdfWid.Image(
+                      pdfWid.MemoryImage(testData),
+                    ),
+                  ),
                   pdfWid.Container(
                     child: pdfWid.Image(
                       pdfWid.MemoryImage(bottomData),

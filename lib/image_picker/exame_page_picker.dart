@@ -72,7 +72,7 @@ class _ExamePagePickerState extends State<ExamePagePicker> {
                   label: const Padding(
                     padding: EdgeInsets.all(16),
                     child: Text(
-                      'Tire uma foto',
+                      'Fotografar',
                       style: TextStyle(fontSize: 18, color: Colors.white),
                     ),
                   ),
@@ -81,16 +81,31 @@ class _ExamePagePickerState extends State<ExamePagePicker> {
                     backgroundColor: Colors.black,
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.all(12),
-                  child: Text('ou'),
+                OutlinedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                    elevation: 0.0,
+                    backgroundColor: Colors.black,
+                  ),
+                  onPressed: () => getFileFromGallery(),
+                  icon: const Icon(Icons.image, color: Colors.white),
+                  label: Text(
+                      style: const TextStyle(color: Colors.white),
+                      exame!.isEmpty
+                          ? 'Selecionar da Galeria'
+                          : 'Adicionar Outro Exame'),
                 ),
                 OutlinedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                    elevation: 0.0,
+                    backgroundColor: Colors.black,
+                  ),
                   onPressed: () => getFileFromGallery(),
-                  icon: const Icon(Icons.attach_file),
-                  label: Text(exame!.isEmpty
-                      ? 'Selecionar Exame'
-                      : 'Adicionar Outro Exame'),
+                  icon: const Icon(Icons.document_scanner, color: Colors.white),
+                  label: Text(
+                      style: const TextStyle(color: Colors.white),
+                      exame!.isEmpty
+                          ? 'Selecionar PDF'
+                          : 'Adicionar Outro Exame'),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10),
@@ -98,8 +113,11 @@ class _ExamePagePickerState extends State<ExamePagePicker> {
                     onPressed: () {
                       Navigator.pop(context, base64Image);
                     },
-                    icon: const Icon(Icons.save),
-                    label: const Text('Salvar Exame'),
+                    icon: const Icon(Icons.save, color: Colors.black),
+                    label: const Text(
+                      'Salvar Exame',
+                      style: TextStyle(color: Colors.black),
+                    ),
                   ),
                 ),
               ],

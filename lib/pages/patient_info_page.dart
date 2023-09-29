@@ -1,13 +1,10 @@
 import 'dart:io';
 
+import 'package:evolucao_medica_2023/components/custom_white_buttom.dart';
 import 'package:evolucao_medica_2023/pages/more_info_page.dart';
 import 'package:evolucao_medica_2023/pages/pdf_view_page.dart';
 import 'package:flutter/material.dart';
-import 'package:share_extend/share_extend.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:pdf/widgets.dart' as pdfLib;
-import 'package:flutter_pdfview/flutter_pdfview.dart';
-import '../config/data_service.dart';
 
 class PatientInfoPage extends StatefulWidget {
   PatientInfoPage({super.key, required this.currentItem});
@@ -126,61 +123,31 @@ class _PatientInfoPageState extends State<PatientInfoPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5)),
-                          side: const BorderSide(
-                            width: 1,
-                            color: Colors.black,
-                          ),
-                        ),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: const Text(
-                          'Voltar',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16),
-                        ),
-                      ),
+                      CustomWhiteButton(
+                          label: 'Voltar',
+                          onpressed: () {
+                            Navigator.pop(context);
+                          }),
                       Flexible(
                         flex: 1,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5)),
-                            side: const BorderSide(
-                              width: 1,
-                              color: Colors.black,
-                            ),
-                          ),
-                          onPressed: () {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: const Text(
-                                    "Informações",
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  content: MoreInfoPage(
-                                    currentItem: widget.currentItem,
-                                  ),
-                                );
-                              },
-                            );
-                          },
-                          child: const Text(
-                            'Mais Informações',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16),
-                          ),
-                        ),
+                        child: CustomWhiteButton(
+                            label: 'Mais Informações',
+                            onpressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: const Text(
+                                      "Informações",
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    content: MoreInfoPage(
+                                      currentItem: widget.currentItem,
+                                    ),
+                                  );
+                                },
+                              );
+                            }),
                       ),
                     ],
                   ),
@@ -189,16 +156,9 @@ class _PatientInfoPageState extends State<PatientInfoPage> {
                   flex: 1,
                   child: SizedBox(
                     width: double.infinity,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5)),
-                        side: const BorderSide(
-                          width: 1,
-                          color: Colors.black,
-                        ),
-                      ),
-                      onPressed: () {
+                    child: CustomWhiteButton(
+                      label: 'Exportar Dados',
+                      onpressed: () {
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
@@ -214,53 +174,21 @@ class _PatientInfoPageState extends State<PatientInfoPage> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(5)),
-                                        side: const BorderSide(
-                                          width: 1,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                      onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => PDFViewPage(
-                                              currentItem: widget.currentItem,
+                                    CustomWhiteButton(
+                                        label: 'Exportar em PDF',
+                                        onpressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => PDFViewPage(
+                                                currentItem: widget.currentItem,
+                                              ),
                                             ),
-                                          ),
-                                        );
-                                      },
-                                      child: const Text(
-                                        'Exportar em PDF',
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                    ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(5)),
-                                        side: const BorderSide(
-                                          width: 1,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                      onPressed: () {},
-                                      child: const Text(
-                                        'Exportar em Texto',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 16,
-                                        ),
-                                      ),
-                                    ),
+                                          );
+                                        }),
+                                    CustomWhiteButton(
+                                        label: 'Exportar em Texto',
+                                        onpressed: () {}),
                                     ElevatedButton(
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: Colors.transparent,
@@ -284,13 +212,6 @@ class _PatientInfoPageState extends State<PatientInfoPage> {
                           },
                         );
                       },
-                      child: const Text(
-                        'Exportar Dados',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                        ),
-                      ),
                     ),
                   ),
                 ),
