@@ -94,19 +94,20 @@ class _ExamePagePickerState extends State<ExamePagePicker> {
                           ? 'Selecionar da Galeria'
                           : 'Adicionar Outro Exame'),
                 ),
-                OutlinedButton.icon(
-                  style: ElevatedButton.styleFrom(
-                    elevation: 0.0,
-                    backgroundColor: Colors.black,
-                  ),
-                  onPressed: () => getFileFromGallery(),
-                  icon: const Icon(Icons.document_scanner, color: Colors.white),
-                  label: Text(
-                      style: const TextStyle(color: Colors.white),
-                      exame!.isEmpty
-                          ? 'Selecionar PDF'
-                          : 'Adicionar Outro Exame'),
-                ),
+
+                // OutlinedButton.icon(
+                //   style: ElevatedButton.styleFrom(
+                //     elevation: 0.0,
+                //     backgroundColor: Colors.black,
+                //   ),
+                //   onPressed: () => getFileFromGallery(),
+                //   icon: const Icon(Icons.document_scanner, color: Colors.white),
+                //   label: Text(
+                //       style: const TextStyle(color: Colors.white),
+                //       exame!.isEmpty
+                //           ? 'Selecionar PDF'
+                //           : 'Adicionar Outro Exame'),
+                // ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10),
                   child: OutlinedButton.icon(

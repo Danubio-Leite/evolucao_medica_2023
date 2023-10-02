@@ -1,10 +1,8 @@
 import 'package:evolucao_medica_2023/pages/about_app_page.dart';
 import 'package:evolucao_medica_2023/pages/in_progress_page.dart';
 import 'package:evolucao_medica_2023/pages/patients_list_page.dart';
-import 'package:evolucao_medica_2023/pages/temp_cronometro.dart';
 import 'package:evolucao_medica_2023/pages/useful_information_page.dart';
 import 'package:flutter/material.dart';
-
 import '../components/CustomHomeButtom.dart';
 import 'cronometro_rcp_page.dart';
 
@@ -59,22 +57,22 @@ class HomePage extends StatelessWidget {
               children: [
                 Container(
                   padding: const EdgeInsets.only(top: 50),
-                  child: Column(
+                  child: const Column(
                     children: [
-                      const CustomHomeButtom(
+                      CustomHomeButtom(
                         image: 'assets/images/pacientes.png',
                         label: 'Lista de Pacientes',
                         route: PatientListPage(
                           title: 'Lista de Pacientes',
                         ),
                       ),
-                      const SizedBox(
+                      SizedBox(
                         height: 20,
                       ),
                       CustomHomeButtom(
                         image: 'assets/images/informacoes.png',
                         label: 'Informações Úteis',
-                        route: CountUpTimerPage(),
+                        route: UsefulInfoPage,
                       ),
                     ],
                   ),

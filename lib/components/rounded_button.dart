@@ -1,19 +1,20 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
 class RoundedButton extends StatelessWidget {
   const RoundedButton({
-    required this.child,
     this.color,
     this.backgroundColor,
     this.elevation,
     this.side = BorderSide.none,
     this.onTap,
     super.key,
+    required this.label,
   });
 
-  final Widget child;
   final Color? color;
-
+  final String label;
   final Color? backgroundColor;
   final double? elevation;
   final BorderSide side;
@@ -24,13 +25,19 @@ class RoundedButton extends StatelessWidget {
     return InkWell(
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          foregroundColor: Colors.black,
-          shape: const StadiumBorder().copyWith(side: side),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
           backgroundColor: color,
-          elevation: elevation,
+          side: const BorderSide(
+            width: 1,
+            color: Colors.black,
+          ),
         ),
         onPressed: onTap,
-        child: child,
+        child: Text(
+          label,
+          style: const TextStyle(
+              color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
+        ),
       ),
     );
   }

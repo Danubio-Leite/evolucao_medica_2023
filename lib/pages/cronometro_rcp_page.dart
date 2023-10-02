@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
@@ -20,6 +22,9 @@ class CronoRCPPage extends StatefulWidget {
 
 class _State extends State<CronoRCPPage> {
   final _isHours = true;
+  int _shockTimes = 0;
+  int _EpinephrineTimes = 0;
+  String _teste = '';
 
   final StopWatchTimer _stopWatchTimerMain = StopWatchTimer(
     mode: StopWatchMode.countUp,
@@ -124,29 +129,26 @@ class _State extends State<CronoRCPPage> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 4),
                         child: RoundedButton(
-                          color: Colors.blue,
-                          onTap: () {
-                            _stopWatchTimerMain.onStartTimer();
-                            _stopWatchTimerShock.onStartTimer();
-                          },
-                          //_stopWatchTimerShock.onStartTimer,
+                            color: Colors.blue,
+                            onTap: () {
+                              if (_stopWatchTimerMain.isRunning) {
+                                _stopWatchTimerMain.onStopTimer();
+                                setState(() {});
+                              } else {
+                                _stopWatchTimerMain.onStartTimer();
+                                _stopWatchTimerShock.onStartTimer();
+                                _stopWatchTimerMain.onAddLap();
+                                _stopWatchTimerMain.rawTime.listen((value) =>
+                                    _teste =
+                                        'Start $value ${StopWatchTimer.getDisplayTime(value)}');
+                                setState(() {});
+                              }
+                            },
+                            //_stopWatchTimerShock.onStartTimer,
 
-                          child: const Text(
-                            'Start',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4),
-                        child: RoundedButton(
-                          color: Colors.green,
-                          onTap: _stopWatchTimerMain.onStopTimer,
-                          child: const Text(
-                            'Stop',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
+                            label: _stopWatchTimerMain.isRunning
+                                ? 'Parar'
+                                : 'Começar'),
                       ),
                     ],
                   ),
@@ -177,22 +179,19 @@ class _State extends State<CronoRCPPage> {
                         padding: const EdgeInsets.symmetric(horizontal: 4),
                         child: RoundedButton(
                           color: Colors.redAccent,
-                          onTap: _stopWatchTimerCPR.onStartTimer,
-                          child: const Text(
-                            'Start CPR',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4),
-                        child: RoundedButton(
-                          color: Colors.green,
-                          onTap: _stopWatchTimerCPR.onStopTimer,
-                          child: const Text(
-                            'Stop',
-                            style: TextStyle(color: Colors.white),
-                          ),
+                          onTap: () {
+                            if (_stopWatchTimerCPR.isRunning) {
+                              _stopWatchTimerCPR.onStopTimer();
+                              setState(() {});
+                            } else {
+                              _stopWatchTimerCPR.onStartTimer();
+
+                              setState(() {});
+                            }
+                          },
+                          label: _stopWatchTimerCPR.isRunning
+                              ? 'Pausar RCP'
+                              : 'Iníciar RCP',
                         ),
                       ),
                     ],
@@ -224,75 +223,68 @@ class _State extends State<CronoRCPPage> {
                         padding: const EdgeInsets.symmetric(horizontal: 4),
                         child: RoundedButton(
                           color: Colors.orange,
-                          onTap: _stopWatchTimerShock.onStartTimer,
-                          child: const Text(
-                            'Shock',
-                            style: TextStyle(color: Colors.white),
-                          ),
+                          onTap: () {
+                            _stopWatchTimerShock.onResetTimer();
+                            _stopWatchTimerShock.onStartTimer();
+                            setState(() {
+                              _shockTimes++;
+                            });
+                          },
+                          label: 'Choque',
                         ),
+                      ),
+                      if (_shockTimes == 0)
+                        const Text('')
+                      else
+                        RoundedButton(
+                          label: _shockTimes.toString(),
+                        )
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      StreamBuilder<int>(
+                        stream: _stopWatchTimerEpinephrine.rawTime,
+                        initialData: _stopWatchTimerEpinephrine.rawTime.value,
+                        builder: (context, snap) {
+                          final value = snap.data!;
+                          final displayTime = StopWatchTimer.getDisplayTime(
+                              value,
+                              milliSecond: false,
+                              hours: _isHours);
+                          return Padding(
+                            padding: const EdgeInsets.all(8),
+                            child: Text(
+                              displayTime,
+                              style: const TextStyle(
+                                  fontSize: 25,
+                                  fontFamily: 'Helvetica',
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          );
+                        },
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 4),
                         child: RoundedButton(
-                          color: Colors.green,
-                          onTap: _stopWatchTimerShock.onStopTimer,
-                          child: const Text(
-                            'Stop',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: [
-                        StreamBuilder<int>(
-                          stream: _stopWatchTimerEpinephrine.rawTime,
-                          initialData: _stopWatchTimerEpinephrine.rawTime.value,
-                          builder: (context, snap) {
-                            final value = snap.data!;
-                            final displayTime = StopWatchTimer.getDisplayTime(
-                                value,
-                                milliSecond: false,
-                                hours: _isHours);
-                            return Padding(
-                              padding: const EdgeInsets.all(8),
-                              child: Text(
-                                displayTime,
-                                style: const TextStyle(
-                                    fontSize: 25,
-                                    fontFamily: 'Helvetica',
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            );
-                          },
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 4),
-                          child: RoundedButton(
                             color: Colors.brown,
-                            onTap: _stopWatchTimerEpinephrine.onStartTimer,
-                            child: const Text(
-                              'Epinephrine',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 4),
-                          child: RoundedButton(
-                            color: Colors.green,
-                            onTap: _stopWatchTimerEpinephrine.onStopTimer,
-                            child: const Text(
-                              'Stop',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                            onTap: () {
+                              _stopWatchTimerEpinephrine.onResetTimer();
+                              _stopWatchTimerEpinephrine.onStartTimer();
+                              setState(() {
+                                _EpinephrineTimes++;
+                              });
+                            },
+                            label: 'Epinefrina'),
+                      ),
+                      if (_EpinephrineTimes == 0)
+                        const Text('')
+                      else
+                        RoundedButton(
+                          label: _EpinephrineTimes.toString(),
+                        )
+                    ],
                   ),
 
                   /// Lap time.
@@ -344,44 +336,47 @@ class _State extends State<CronoRCPPage> {
                       ),
                     ),
                   ),
-
-                  /// Button
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4),
-                        child: RoundedButton(
-                          color: Colors.red,
-                          onTap: _stopWatchTimerMain.onResetTimer,
-                          child: const Text(
-                            'Reset',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Padding(
-                              padding:
-                                  const EdgeInsets.all(0).copyWith(right: 8),
-                              child: RoundedButton(
-                                color: Colors.deepPurpleAccent,
-                                onTap: _stopWatchTimerMain.onAddLap,
-                                child: const Text(
-                                  'Lap',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                    child: RoundedButton(
+                      color: Color.fromARGB(255, 117, 182, 201),
+                      onTap: () {},
+                      label: 'Outras Medicações',
+                    ),
                   ),
+
+                  // /// Button
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: <Widget>[
+                  //     Padding(
+                  //       padding: const EdgeInsets.symmetric(horizontal: 4),
+                  //       child: RoundedButton(
+                  //         color: Colors.red,
+                  //         onTap: _stopWatchTimerMain.onResetTimer,
+                  //         label: 'Reset',
+                  //       ),
+                  //     ),
+                  //     Padding(
+                  //       padding: const EdgeInsets.symmetric(horizontal: 4),
+                  //       child: Row(
+                  //         mainAxisAlignment: MainAxisAlignment.center,
+                  //         children: <Widget>[
+                  //           Padding(
+                  //             padding:
+                  //                 const EdgeInsets.all(0).copyWith(right: 8),
+                  //             child: RoundedButton(
+                  //               color: Colors.deepPurpleAccent,
+                  //               onTap: _stopWatchTimerMain.onAddLap,
+                  //               label: 'Lap',
+                  //             ),
+                  //           ),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
+                  // Text(_teste),
                 ],
               ),
             ),
