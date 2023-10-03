@@ -142,14 +142,15 @@ class _State extends State<CronoRCPPage> {
                             color: Colors.blue,
                             onTap: () {
                               if (_stopWatchTimerMain.isRunning) {
+                                DateTime now = DateTime.now();
                                 _clickedTime
                                     .add(DateFormat('kk:mm:ss').format(now));
                                 _clickedButton.add('Pausa Geral');
                                 _stopWatchTimerMain.onAddLap();
                                 _stopWatchTimerMain.onStopTimer();
-
                                 setState(() {});
                               } else {
+                                DateTime now = DateTime.now();
                                 _clickedButton.add('Início');
                                 _clickedTime
                                     .add(DateFormat('kk:mm:ss').format(now));
@@ -200,6 +201,7 @@ class _State extends State<CronoRCPPage> {
                           color: Colors.redAccent,
                           onTap: () {
                             if (_stopWatchTimerCPR.isRunning) {
+                              DateTime now = DateTime.now();
                               _clickedButton.add('Pausa na RCP');
                               _clickedTime
                                   .add(DateFormat('kk:mm:ss').format(now));
@@ -207,6 +209,7 @@ class _State extends State<CronoRCPPage> {
                               _stopWatchTimerCPR.onStopTimer();
                               setState(() {});
                             } else {
+                              DateTime now = DateTime.now();
                               _clickedButton.add('Início da RCP');
                               _clickedTime
                                   .add(DateFormat('kk:mm:ss').format(now));
@@ -251,6 +254,7 @@ class _State extends State<CronoRCPPage> {
                         child: RoundedButton(
                           color: Colors.orange,
                           onTap: () {
+                            DateTime now = DateTime.now();
                             _clickedButton.add('Choque');
                             _clickedTime
                                 .add(DateFormat('kk:mm:ss').format(now));
@@ -303,6 +307,7 @@ class _State extends State<CronoRCPPage> {
                         child: RoundedButton(
                             color: Colors.brown,
                             onTap: () {
+                              DateTime now = DateTime.now();
                               _clickedButton.add('Epinefrina');
                               _clickedTime
                                   .add(DateFormat('kk:mm:ss').format(now));
@@ -350,7 +355,7 @@ class _State extends State<CronoRCPPage> {
                             itemBuilder: (BuildContext context, int index) {
                               final data = value[index];
                               final clicked = _clickedButton[index];
-                              List<String> clickedTimeFinal = _clickedTime;
+                              final clickedTimeFinal = _clickedTime;
                               return Column(
                                 children: <Widget>[
                                   Padding(
@@ -401,6 +406,7 @@ class _State extends State<CronoRCPPage> {
                     child: RoundedButton(
                       color: Color.fromARGB(255, 117, 182, 201),
                       onTap: () {
+                        DateTime now = DateTime.now();
                         _clickedButton.add('Medicação');
                         _clickedTime.add(DateFormat('kk:mm:ss').format(now));
                         _stopWatchTimerMain.onAddLap();
