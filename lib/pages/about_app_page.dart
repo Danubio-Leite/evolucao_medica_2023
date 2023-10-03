@@ -15,7 +15,7 @@ class AboutAppPage extends StatelessWidget {
         backgroundColor: const Color.fromARGB(255, 35, 163, 178),
         title: const Text(
           'Sobre o App',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.black),
         ),
       ),
       body: Padding(
@@ -30,21 +30,24 @@ class AboutAppPage extends StatelessWidget {
                   children: [
                     const Text(
                       'Este aplicativo foi desenvolvido por Danúbio Leite para fins de estudo, qualquer uso prático é de responsabilidade do usuário.',
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(color: Colors.black),
                     ),
                     const Text(
                       'Dúvidas ou sugestões? Manda um email para danubioalves@gmail.com.',
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(color: Colors.black),
                     ),
                     RichText(
                       text: TextSpan(
                         children: [
                           const TextSpan(
+                              style: const TextStyle(color: Colors.black),
                               text:
                                   'Quer conhecer outros projetos que estou desenvolvendo? Clica '),
                           TextSpan(
                             text: 'aqui',
-                            style: const TextStyle(fontWeight: FontWeight.bold),
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
                                 launchUrl(

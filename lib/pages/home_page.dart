@@ -32,7 +32,7 @@ class HomePage extends StatelessWidget {
                         'Evolução',
                         style: TextStyle(
                           fontSize: 24,
-                          color: Colors.white,
+                          color: Colors.black,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -45,7 +45,7 @@ class HomePage extends StatelessWidget {
                         'de Pacientes',
                         style: TextStyle(
                           fontSize: 24,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                       ),
                     ],
@@ -71,7 +71,7 @@ class HomePage extends StatelessWidget {
                         height: 20,
                       ),
                       CustomHomeButtom(
-                        image: 'assets/images/informacoes.png',
+                        image: 'assets/images/calculator.png',
                         label: 'Calculadoras',
                         route: CalculadorasPage(),
                       ),

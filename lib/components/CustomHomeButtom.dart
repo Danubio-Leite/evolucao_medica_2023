@@ -25,11 +25,11 @@ class CustomHomeButtom extends StatelessWidget {
           width: 170,
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
-              color: const Color.fromARGB(94, 11, 69, 78),
+              color: Color.fromARGB(94, 81, 122, 129),
               borderRadius: BorderRadius.circular(10),
               border: Border.all(
                 width: 1,
-                color: Colors.white,
+                color: Colors.black,
               )),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -44,7 +44,7 @@ class CustomHomeButtom extends StatelessWidget {
               Text(
                 label,
                 style: const TextStyle(
-                  color: Colors.white,
+                  color: Colors.black,
                   fontSize: 13,
                   fontWeight: FontWeight.bold,
                 ),
