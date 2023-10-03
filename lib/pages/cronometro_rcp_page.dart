@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 
+import '../components/custom_white_buttom.dart';
 import '../components/rounded_button.dart';
 
 class CronoRCPPage extends StatefulWidget {
@@ -52,8 +53,12 @@ class _State extends State<CronoRCPPage> {
   final _scrollController = ScrollController();
   String _startTimeText = '';
   String _startTime = '';
-  List<String> _clickedButton = [];
-  List<String> _clickedTime = [];
+  final List<String> _clickedButton = [];
+  final List<String> _clickedTime = [];
+  String _RCPLabel = 'Iníciar RCP';
+  bool _started = false;
+  bool _finished = false;
+  bool _exportedData = false;
 
   @override
   void initState() {
@@ -86,6 +91,48 @@ class _State extends State<CronoRCPPage> {
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(178, 95, 189, 226),
         title: const Text('Cronômetro RCP'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios),
+          onPressed: () {
+            if (_started == false) {
+              Navigator.pop(context);
+            } else if (_finished && _exportedData == true) {
+              (Navigator.pop(context));
+            } else {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: const Text(
+                      "As informações da RCP Serão Perdidas",
+                      textAlign: TextAlign.center,
+                    ),
+                    content: SizedBox(
+                      width: double.infinity,
+                      height: 100,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          CustomWhiteButton(
+                              label: 'Sair',
+                              onpressed: () {
+                                Navigator.pop(context);
+                                Navigator.pop(context);
+                              }),
+                          CustomWhiteButton(
+                              label: 'Retomar',
+                              onpressed: () {
+                                Navigator.pop(context);
+                              }),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              );
+            }
+          },
+        ),
       ),
       body: Container(
         height: double.infinity,
@@ -142,13 +189,59 @@ class _State extends State<CronoRCPPage> {
                             color: Colors.blue,
                             onTap: () {
                               if (_stopWatchTimerMain.isRunning) {
-                                DateTime now = DateTime.now();
-                                _clickedTime
-                                    .add(DateFormat('kk:mm:ss').format(now));
-                                _clickedButton.add('Pausa Geral');
-                                _stopWatchTimerMain.onAddLap();
-                                _stopWatchTimerMain.onStopTimer();
-                                setState(() {});
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: const Text(
+                                        "Deseja Finalizar o Resgistro?",
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      content: SizedBox(
+                                        width: double.infinity,
+                                        height: 100,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            CustomWhiteButton(
+                                                label: 'Finalizar',
+                                                onpressed: () {
+                                                  DateTime now = DateTime.now();
+                                                  _clickedTime.add(
+                                                      DateFormat('kk:mm:ss')
+                                                          .format(now));
+                                                  _clickedButton
+                                                      .add('Pausa Geral');
+                                                  _stopWatchTimerMain
+                                                      .onAddLap();
+                                                  _stopWatchTimerMain
+                                                      .onStopTimer();
+                                                  _stopWatchTimerMain
+                                                      .onResetTimer();
+                                                  _stopWatchTimerCPR
+                                                      .onResetTimer();
+                                                  _stopWatchTimerShock
+                                                      .onResetTimer();
+                                                  _stopWatchTimerEpinephrine
+                                                      .onResetTimer();
+                                                  _finished = true;
+                                                  _shockTimes = 0;
+                                                  _EpinephrineTimes = 0;
+                                                  setState(() {});
+                                                  Navigator.pop(context);
+                                                }),
+                                            CustomWhiteButton(
+                                                label: 'Retomar',
+                                                onpressed: () {
+                                                  Navigator.pop(context);
+                                                }),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                );
                               } else {
                                 DateTime now = DateTime.now();
                                 _clickedButton.add('Início');
@@ -160,7 +253,8 @@ class _State extends State<CronoRCPPage> {
                                 //     _teste =
                                 //         'Start $value ${StopWatchTimer.getDisplayTime(value)}');
                                 _startTimeText = 'RCP Iniciada às ';
-
+                                _startTime = DateFormat('kk:mm').format(now);
+                                _started = true;
                                 setState(() {});
                               }
                             },
@@ -207,6 +301,8 @@ class _State extends State<CronoRCPPage> {
                                   .add(DateFormat('kk:mm:ss').format(now));
                               _stopWatchTimerMain.onAddLap();
                               _stopWatchTimerCPR.onStopTimer();
+                              _RCPLabel = 'Retomar RCP';
+
                               setState(() {});
                             } else {
                               DateTime now = DateTime.now();
@@ -215,13 +311,12 @@ class _State extends State<CronoRCPPage> {
                                   .add(DateFormat('kk:mm:ss').format(now));
                               _stopWatchTimerMain.onAddLap();
                               _stopWatchTimerCPR.onStartTimer();
+                              _RCPLabel = 'Pausar RCP';
 
                               setState(() {});
                             }
                           },
-                          label: _stopWatchTimerCPR.isRunning
-                              ? 'Pausar RCP'
-                              : 'Iníciar RCP',
+                          label: _RCPLabel,
                         ),
                       ),
                     ],
@@ -255,6 +350,16 @@ class _State extends State<CronoRCPPage> {
                           color: Colors.orange,
                           onTap: () {
                             DateTime now = DateTime.now();
+
+                            if (_stopWatchTimerCPR.isRunning) {
+                              _clickedButton.add('Pausa na RCP');
+                              _clickedTime
+                                  .add(DateFormat('kk:mm:ss').format(now));
+                              _stopWatchTimerMain.onAddLap();
+                              _stopWatchTimerCPR.onStopTimer();
+                              _RCPLabel = 'Retomar RCP';
+                            }
+
                             _clickedButton.add('Choque');
                             _clickedTime
                                 .add(DateFormat('kk:mm:ss').format(now));
@@ -262,7 +367,7 @@ class _State extends State<CronoRCPPage> {
                             _stopWatchTimerShock.onResetTimer();
                             _stopWatchTimerCPR.onResetTimer();
                             _stopWatchTimerShock.onStartTimer();
-                            _stopWatchTimerCPR.onStartTimer();
+
                             setState(() {
                               _shockTimes++;
                             });
@@ -415,38 +520,19 @@ class _State extends State<CronoRCPPage> {
                     ),
                   ),
 
-                  // /// Button
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.center,
-                  //   children: <Widget>[
-                  //     Padding(
-                  //       padding: const EdgeInsets.symmetric(horizontal: 4),
-                  //       child: RoundedButton(
-                  //         color: Colors.red,
-                  //         onTap: _stopWatchTimerMain.onResetTimer,
-                  //         label: 'Reset',
-                  //       ),
-                  //     ),
-                  //     Padding(
-                  //       padding: const EdgeInsets.symmetric(horizontal: 4),
-                  //       child: Row(
-                  //         mainAxisAlignment: MainAxisAlignment.center,
-                  //         children: <Widget>[
-                  //           Padding(
-                  //             padding:
-                  //                 const EdgeInsets.all(0).copyWith(right: 8),
-                  //             child: RoundedButton(
-                  //               color: Colors.deepPurpleAccent,
-                  //               onTap: _stopWatchTimerMain.onAddLap,
-                  //               label: 'Lap',
-                  //             ),
-                  //           ),
-                  //         ],
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
-                  // Text(_teste),
+                  if (_finished == true)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 4),
+                      child: RoundedButton(
+                        color: const Color.fromARGB(211, 234, 237, 66),
+                        onTap: () {
+                          _exportedData = true;
+                        },
+                        label: 'Exportar Dados',
+                      ),
+                    )
+                  else
+                    const Text('')
                 ],
               ),
             ),
