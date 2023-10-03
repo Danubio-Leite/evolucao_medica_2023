@@ -25,6 +25,7 @@ class _State extends State<CronoRCPPage> {
   int _shockTimes = 0;
   int _EpinephrineTimes = 0;
   String _teste = '';
+  DateTime now = DateTime.now();
 
   final StopWatchTimer _stopWatchTimerMain = StopWatchTimer(
     mode: StopWatchMode.countUp,
@@ -49,7 +50,10 @@ class _State extends State<CronoRCPPage> {
   );
 
   final _scrollController = ScrollController();
-  final String _startTime = 'Início do RCP: 09:00';
+  String _startTimeText = '';
+  String _startTime = '';
+  List<String> _clickedButton = [];
+  List<String> _clickedTime = [];
 
   @override
   void initState() {
@@ -80,12 +84,12 @@ class _State extends State<CronoRCPPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(136, 150, 200, 219),
+        backgroundColor: const Color.fromARGB(178, 95, 189, 226),
         title: const Text('Cronômetro RCP'),
       ),
       body: Container(
         height: double.infinity,
-        color: const Color.fromARGB(136, 150, 200, 219),
+        color: const Color.fromARGB(178, 95, 189, 226),
         child: Scrollbar(
           child: SingleChildScrollView(
             child: Padding(
@@ -99,7 +103,13 @@ class _State extends State<CronoRCPPage> {
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
-                    child: Text(_startTime),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(_startTimeText),
+                        Text(_startTime),
+                      ],
+                    ),
                   ),
 
                   /// Display stop watch time
@@ -132,15 +142,24 @@ class _State extends State<CronoRCPPage> {
                             color: Colors.blue,
                             onTap: () {
                               if (_stopWatchTimerMain.isRunning) {
+                                _clickedTime
+                                    .add(DateFormat('kk:mm:ss').format(now));
+                                _clickedButton.add('Pausa Geral');
+                                _stopWatchTimerMain.onAddLap();
                                 _stopWatchTimerMain.onStopTimer();
+
                                 setState(() {});
                               } else {
+                                _clickedButton.add('Início');
+                                _clickedTime
+                                    .add(DateFormat('kk:mm:ss').format(now));
                                 _stopWatchTimerMain.onStartTimer();
-                                _stopWatchTimerShock.onStartTimer();
                                 _stopWatchTimerMain.onAddLap();
-                                _stopWatchTimerMain.rawTime.listen((value) =>
-                                    _teste =
-                                        'Start $value ${StopWatchTimer.getDisplayTime(value)}');
+                                // _stopWatchTimerMain.rawTime.listen((value) =>
+                                //     _teste =
+                                //         'Start $value ${StopWatchTimer.getDisplayTime(value)}');
+                                _startTimeText = 'RCP Iniciada às ';
+
                                 setState(() {});
                               }
                             },
@@ -181,9 +200,17 @@ class _State extends State<CronoRCPPage> {
                           color: Colors.redAccent,
                           onTap: () {
                             if (_stopWatchTimerCPR.isRunning) {
+                              _clickedButton.add('Pausa na RCP');
+                              _clickedTime
+                                  .add(DateFormat('kk:mm:ss').format(now));
+                              _stopWatchTimerMain.onAddLap();
                               _stopWatchTimerCPR.onStopTimer();
                               setState(() {});
                             } else {
+                              _clickedButton.add('Início da RCP');
+                              _clickedTime
+                                  .add(DateFormat('kk:mm:ss').format(now));
+                              _stopWatchTimerMain.onAddLap();
                               _stopWatchTimerCPR.onStartTimer();
 
                               setState(() {});
@@ -224,8 +251,14 @@ class _State extends State<CronoRCPPage> {
                         child: RoundedButton(
                           color: Colors.orange,
                           onTap: () {
+                            _clickedButton.add('Choque');
+                            _clickedTime
+                                .add(DateFormat('kk:mm:ss').format(now));
+                            _stopWatchTimerMain.onAddLap();
                             _stopWatchTimerShock.onResetTimer();
+                            _stopWatchTimerCPR.onResetTimer();
                             _stopWatchTimerShock.onStartTimer();
+                            _stopWatchTimerCPR.onStartTimer();
                             setState(() {
                               _shockTimes++;
                             });
@@ -270,6 +303,10 @@ class _State extends State<CronoRCPPage> {
                         child: RoundedButton(
                             color: Colors.brown,
                             onTap: () {
+                              _clickedButton.add('Epinefrina');
+                              _clickedTime
+                                  .add(DateFormat('kk:mm:ss').format(now));
+                              _stopWatchTimerMain.onAddLap();
                               _stopWatchTimerEpinephrine.onResetTimer();
                               _stopWatchTimerEpinephrine.onStartTimer();
                               setState(() {
@@ -291,7 +328,7 @@ class _State extends State<CronoRCPPage> {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8),
                     child: SizedBox(
-                      height: 100,
+                      height: 150,
                       child: StreamBuilder<List<StopWatchRecord>>(
                         stream: _stopWatchTimerMain.records,
                         initialData: _stopWatchTimerMain.records.value,
@@ -312,19 +349,42 @@ class _State extends State<CronoRCPPage> {
                             scrollDirection: Axis.vertical,
                             itemBuilder: (BuildContext context, int index) {
                               final data = value[index];
+                              final clicked = _clickedButton[index];
+                              List<String> clickedTimeFinal = _clickedTime;
                               return Column(
                                 children: <Widget>[
                                   Padding(
                                     padding: const EdgeInsets.all(8),
-                                    child: Text(
-                                      '${index + 1} ${data.displayTime}',
-                                      style: const TextStyle(
-                                          fontSize: 17,
-                                          fontFamily: 'Helvetica',
-                                          fontWeight: FontWeight.bold),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          '$clicked ',
+                                          style: const TextStyle(
+                                              fontSize: 17,
+                                              fontFamily: 'Helvetica',
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Text(
+                                          '${data.displayTime}',
+                                          style: const TextStyle(
+                                              fontSize: 17,
+                                              fontFamily: 'Helvetica',
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Text(
+                                          clickedTimeFinal[index],
+                                          style: const TextStyle(
+                                              fontSize: 17,
+                                              fontFamily: 'Helvetica',
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                   const Divider(
+                                    color: Colors.black38,
                                     height: 1,
                                   )
                                 ],
@@ -340,7 +400,11 @@ class _State extends State<CronoRCPPage> {
                     padding: const EdgeInsets.symmetric(horizontal: 4),
                     child: RoundedButton(
                       color: Color.fromARGB(255, 117, 182, 201),
-                      onTap: () {},
+                      onTap: () {
+                        _clickedButton.add('Medicação');
+                        _clickedTime.add(DateFormat('kk:mm:ss').format(now));
+                        _stopWatchTimerMain.onAddLap();
+                      },
                       label: 'Outras Medicações',
                     ),
                   ),

@@ -1,4 +1,5 @@
 import 'package:evolucao_medica_2023/pages/about_app_page.dart';
+import 'package:evolucao_medica_2023/pages/calculadoras_page.dart';
 import 'package:evolucao_medica_2023/pages/in_progress_page.dart';
 import 'package:evolucao_medica_2023/pages/patients_list_page.dart';
 import 'package:evolucao_medica_2023/pages/useful_information_page.dart';
@@ -71,8 +72,8 @@ class HomePage extends StatelessWidget {
                       ),
                       CustomHomeButtom(
                         image: 'assets/images/informacoes.png',
-                        label: 'Informações Úteis',
-                        route: UsefulInfoPage,
+                        label: 'Calculadoras',
+                        route: CalculadorasPage(),
                       ),
                     ],
                   ),
@@ -82,7 +83,7 @@ class HomePage extends StatelessWidget {
                   child: Column(
                     children: [
                       CustomHomeButtom(
-                        image: 'assets/images/sala_vermelha.png',
+                        image: 'assets/images/stopwatch.png',
                         label: 'Cronômetro RCP',
                         route: CronoRCPPage(),
                       ),
