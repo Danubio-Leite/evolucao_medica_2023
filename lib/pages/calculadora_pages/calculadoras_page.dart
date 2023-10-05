@@ -1,10 +1,12 @@
 import 'package:evolucao_medica_2023/pages/about_app_page.dart';
+import 'package:evolucao_medica_2023/pages/calculadora_pages/imc_page.dart';
+import 'package:evolucao_medica_2023/pages/calculadora_pages/mcg_page.dart';
 import 'package:evolucao_medica_2023/pages/in_progress_page.dart';
 import 'package:evolucao_medica_2023/pages/patients_list_page.dart';
 import 'package:evolucao_medica_2023/pages/useful_information_page.dart';
 import 'package:flutter/material.dart';
-import '../components/CustomHomeButtom.dart';
-import 'cronometro_rcp_page.dart';
+import '../../components/CustomHomeButtom.dart';
+import '../cronometro_rcp_page.dart';
 
 class CalculadorasPage extends StatelessWidget {
   const CalculadorasPage({super.key});
@@ -13,10 +15,10 @@ class CalculadorasPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 35, 163, 178),
+        backgroundColor: const Color.fromARGB(255, 35, 163, 178),
         title: const Text('Calculadoras'),
       ),
-      backgroundColor: Color.fromARGB(255, 35, 163, 178),
+      backgroundColor: const Color.fromARGB(255, 35, 163, 178),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -30,7 +32,7 @@ class CalculadorasPage extends StatelessWidget {
                       CustomHomeButtom(
                         image: 'assets/images/imc.png',
                         label: 'IMC',
-                        route: Placeholder(),
+                        route: IMCPage(),
                       ),
                       SizedBox(
                         height: 20,
@@ -50,7 +52,7 @@ class CalculadorasPage extends StatelessWidget {
                       CustomHomeButtom(
                         image: 'assets/images/mcg.png',
                         label: 'MCG / KG / MIN',
-                        route: Placeholder(),
+                        route: MCGPage(),
                       ),
                       SizedBox(
                         height: 20,

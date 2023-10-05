@@ -1,5 +1,5 @@
 import 'package:evolucao_medica_2023/pages/about_app_page.dart';
-import 'package:evolucao_medica_2023/pages/calculadoras_page.dart';
+import 'package:evolucao_medica_2023/pages/calculadora_pages/calculadoras_page.dart';
 import 'package:evolucao_medica_2023/pages/in_progress_page.dart';
 import 'package:evolucao_medica_2023/pages/patients_list_page.dart';
 import 'package:evolucao_medica_2023/pages/useful_information_page.dart';
