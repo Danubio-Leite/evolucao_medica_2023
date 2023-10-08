@@ -40,7 +40,7 @@ class CalculadorasPage extends StatelessWidget {
                       CustomHomeButtom(
                         image: 'assets/images/uti.png',
                         label: 'Drogas UTI',
-                        route: Placeholder(),
+                        route: InProgressPage(),
                       ),
                     ],
                   ),
@@ -60,7 +60,7 @@ class CalculadorasPage extends StatelessWidget {
                       CustomHomeButtom(
                         image: 'assets/images/sala_vermelha.png',
                         label: 'Indice IgG',
-                        route: Placeholder(),
+                        route: InProgressPage(),
                       ),
                     ],
                   ),

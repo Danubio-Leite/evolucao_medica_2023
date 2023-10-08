@@ -27,15 +27,15 @@ class _IMCPageState extends State<IMCPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 35, 163, 178),
+        backgroundColor: const Color.fromARGB(178, 95, 189, 226),
         title: const Text(
           'IMC',
           style: TextStyle(color: Colors.black),
         ),
       ),
-      backgroundColor: const Color.fromARGB(255, 35, 163, 178),
       body: SingleChildScrollView(
         child: Container(
+          color: const Color.fromARGB(178, 95, 189, 226),
           padding:
               const EdgeInsets.only(bottom: 50, left: 12, right: 12, top: 40),
           height: MediaQuery.of(context).size.height,

@@ -68,7 +68,7 @@ class _MyHomePageState extends State<PatientListPage> {
         Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(
-            backgroundColor: const Color.fromARGB(255, 35, 163, 178),
+            backgroundColor: const Color.fromARGB(178, 95, 189, 226),
             title: Text(widget.title),
           ),
           body: ListView.builder(
@@ -91,7 +91,7 @@ class _MyHomePageState extends State<PatientListPage> {
                     });
               }),
           floatingActionButton: FloatingActionButton(
-            backgroundColor: const Color.fromARGB(255, 35, 163, 178),
+            backgroundColor: const Color.fromARGB(178, 95, 189, 226),
             onPressed: () => showForm(context, null),
             child: const Icon(
               Icons.add,

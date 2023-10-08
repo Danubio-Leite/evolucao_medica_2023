@@ -16,26 +16,28 @@ class _MCGPageState extends State<MCGPage> {
     mask: '#.##',
     filter: {'#': RegExp(r'[0-9]')},
   );
-  final TextEditingController? _controllerWeight = TextEditingController();
+  final TextEditingController? _controllerMlHr = TextEditingController();
   final TextEditingController? _controllerHeight = TextEditingController();
 
-  double? _height = 0;
+  double? _mlHr = 0;
   double? _weight = 0;
+  double? _mgSoro = 0;
+  double? _mlSoro = 0;
   double? _imc = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 35, 163, 178),
+        backgroundColor: const Color.fromARGB(178, 95, 189, 226),
         title: const Text(
           'MCG/KG/MIN',
           style: TextStyle(color: Colors.black),
         ),
       ),
-      backgroundColor: const Color.fromARGB(255, 35, 163, 178),
       body: SingleChildScrollView(
         child: Container(
+          color: const Color.fromARGB(178, 95, 189, 226),
           padding:
               const EdgeInsets.only(bottom: 50, left: 12, right: 12, top: 40),
           height: MediaQuery.of(context).size.height,
@@ -62,8 +64,8 @@ class _MCGPageState extends State<MCGPage> {
                       children: [
                         Expanded(
                           child: TextFormField(
-                            key: Key(_height.toString()),
-                            //initialValue: _height.toString(),
+                            key: Key(_mlHr.toString()),
+                            //initialValue: _mlHr.toString(),
                             style: const TextStyle(color: Colors.black),
                             keyboardType: TextInputType.number,
                             inputFormatters: [heightFormatter],
@@ -91,15 +93,15 @@ class _MCGPageState extends State<MCGPage> {
                               if (_weight != 0) {
                                 setState(() {
                                   if (_controllerHeight!.text != '') {
-                                    _height =
+                                    _mlHr =
                                         double.parse(_controllerHeight!.text);
                                   }
-                                  if (_controllerWeight!.text != '') {
+                                  if (_controllerMlHr!.text != '') {
                                     _weight =
-                                        double.parse(_controllerWeight!.text);
+                                        double.parse(_controllerMlHr!.text);
                                   }
                                   _imc = (_weight! /
-                                      ((_height! / 100) * (_height! / 100)));
+                                      ((_mlHr! / 100) * (_mlHr! / 100)));
                                 });
                               }
                             },
@@ -129,19 +131,19 @@ class _MCGPageState extends State<MCGPage> {
                                 borderRadius: BorderRadius.circular(12),
                               ),
                             ),
-                            controller: _controllerWeight,
+                            controller: _controllerMlHr,
                             onChanged: (IMCPageState) {
-                              if (_height! >= 0 && _weight! >= 0) {
+                              if (_mlHr! >= 0 && _weight! >= 0) {
                                 setState(() {
                                   if (_controllerHeight!.text != '') {
-                                    _height =
+                                    _mlHr =
                                         double.parse(_controllerHeight!.text);
                                   }
-                                  if (_controllerWeight!.text != '') {
+                                  if (_controllerMlHr!.text != '') {
                                     _weight =
-                                        double.parse(_controllerWeight!.text);
+                                        double.parse(_controllerMlHr!.text);
                                   }
-                                  _imc = (_weight! / ((_height)! * (_height)!));
+                                  _imc = (_weight! / ((_mlHr)! * (_mlHr)!));
                                 });
                               }
                             },

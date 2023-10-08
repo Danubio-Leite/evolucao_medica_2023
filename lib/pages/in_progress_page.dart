@@ -6,16 +6,17 @@ class InProgressPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(0, 151, 178, 1),
       appBar: AppBar(
-        backgroundColor: const Color.fromRGBO(0, 151, 178, 1),
+        backgroundColor: const Color.fromARGB(178, 95, 189, 226),
       ),
-      body: Center(
+      body: Container(
+        width: double.infinity,
+        color: const Color.fromARGB(178, 95, 189, 226),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             const SizedBox(
-              height: 180,
+              height: 150,
             ),
             SizedBox(
               height: 180,
@@ -29,7 +30,7 @@ class InProgressPage extends StatelessWidget {
               style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white),
+                  color: Colors.black),
               textAlign: TextAlign.center,
             ),
           ],
