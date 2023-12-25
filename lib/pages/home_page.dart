@@ -1,6 +1,7 @@
 import 'package:evolucao_medica_2023/pages/about_app_page.dart';
 import 'package:evolucao_medica_2023/pages/calculadora_pages/calculadoras_page.dart';
 import 'package:evolucao_medica_2023/pages/in_progress_page.dart';
+import 'package:evolucao_medica_2023/pages/lista_noticias_page.dart';
 import 'package:evolucao_medica_2023/pages/patients_list_page.dart';
 import 'package:evolucao_medica_2023/pages/useful_information_page.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 35, 163, 178),
+      backgroundColor: const Color.fromARGB(255, 35, 163, 178),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -58,22 +59,30 @@ class HomePage extends StatelessWidget {
               children: [
                 Container(
                   padding: const EdgeInsets.only(top: 50),
-                  child: const Column(
+                  child: Column(
                     children: [
-                      CustomHomeButtom(
+                      const CustomHomeButtom(
                         image: 'assets/images/pacientes.png',
                         label: 'Lista de Pacientes',
                         route: PatientListPage(
                           title: 'Lista de Pacientes',
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
-                      CustomHomeButtom(
+                      const CustomHomeButtom(
                         image: 'assets/images/calculator.png',
                         label: 'Calculadoras',
                         route: CalculadorasPage(),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      CustomHomeButtom(
+                        image: 'assets/images/informacoes.png',
+                        label: 'Notícias',
+                        route: ListaNoticiasPage(),
                       ),
                     ],
                   ),
@@ -86,6 +95,14 @@ class HomePage extends StatelessWidget {
                         image: 'assets/images/stopwatch.png',
                         label: 'Cronômetro RCP',
                         route: CronoRCPPage(),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      const CustomHomeButtom(
+                        image: 'assets/images/uti.png',
+                        label: 'Alguma Coisa Aqui',
+                        route: AboutAppPage(),
                       ),
                       const SizedBox(
                         height: 20,
